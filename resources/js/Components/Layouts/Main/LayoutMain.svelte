@@ -22,6 +22,6 @@
     </a>
   </header>
   <article>
-    {@render children()}
+    {@render children?.()}
   </article>
 </main>
