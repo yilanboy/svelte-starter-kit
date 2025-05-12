@@ -1,7 +1,30 @@
 <script lang="ts">
   import LayoutAuth from "#components/Layouts/Auth/LayoutAuth.svelte";
+  import { router, inertia } from "@inertiajs/svelte";
 
   let title = "Login";
+
+  interface Props {
+    errors: {
+      email: string;
+    };
+  }
+
+  let { errors }: Props = $props();
+
+  let values = $state({
+    email: "allen@example.com",
+    password: "secret",
+    remember: false,
+  });
+
+  function submit(event: SubmitEvent) {
+    event.preventDefault();
+
+    router.post("/login", values);
+  }
+
+  $inspect(errors);
 </script>
 
 <svelte:head>
@@ -11,11 +34,6 @@
 <LayoutAuth>
   <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img
-        class="mx-auto h-10 w-auto"
-        src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-        alt="Your Company"
-      />
       <h2
         class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900"
       >
@@ -24,13 +42,14 @@
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" action="#" method="POST">
+      <form class="space-y-6" onsubmit={submit}>
         <div>
-          <label for="email" class="block text-sm/6 font-medium text-gray-900"
-            >Email address</label
-          >
+          <label for="email" class="block text-sm/6 font-medium text-gray-900">
+            Email address
+          </label>
           <div class="mt-2">
             <input
+              bind:value={values.email}
               type="email"
               name="email"
               id="email"
@@ -49,14 +68,17 @@
             >
             <div class="text-sm">
               <a
-                href="#"
+                use:inertia
+                href="/forgot-password"
                 class="font-semibold text-indigo-600 hover:text-indigo-500"
-                >Forgot password?</a
               >
+                Forgot password?
+              </a>
             </div>
           </div>
           <div class="mt-2">
             <input
+              bind:value={values.password}
               type="password"
               name="password"
               id="password"
@@ -67,20 +89,29 @@
           </div>
         </div>
 
+        {#if errors.email}
+          <div class="text-red-500">{errors.email}</div>
+        {/if}
+
         <div>
           <button
             type="submit"
             class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >Sign in</button
           >
+            Sign in
+          </button>
         </div>
       </form>
 
       <p class="mt-10 text-center text-sm/6 text-gray-500">
         Not a member?
-        <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500"
-          >Start a 14 day free trial</a
+        <a
+          use:inertia
+          href="/register"
+          class="font-semibold text-indigo-600 hover:text-indigo-500"
         >
+          Become one!
+        </a>
       </p>
     </div>
   </div>

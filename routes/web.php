@@ -11,4 +11,10 @@ Route::get('/about', function () {
     ]);
 });
 
-Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])
+    ->name('login')
+    ->middleware('guest');;
+
+Route::post('login', [AuthenticatedSessionController::class, 'store'])
+    ->name('login.store')
+    ->middleware('guest');
