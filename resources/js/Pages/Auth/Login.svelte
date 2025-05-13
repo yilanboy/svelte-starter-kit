@@ -1,5 +1,6 @@
 <script lang="ts">
-  import LayoutAuth from "#components/Layouts/Auth/LayoutAuth.svelte";
+  import LayoutAuth from "@/Components/Layouts/Auth/LayoutAuth.svelte";
+  import { store } from "@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController";
   import { router, inertia } from "@inertiajs/svelte";
 
   let title = "Login";
@@ -21,10 +22,8 @@
   function submit(event: SubmitEvent) {
     event.preventDefault();
 
-    router.post("/login", values);
+    router.post(store.url(), values);
   }
-
-  $inspect(errors);
 </script>
 
 <svelte:head>

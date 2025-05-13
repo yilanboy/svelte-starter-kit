@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LayoutMain from "#components/Layouts/Main/LayoutMain.svelte";
+  import LayoutMain from "@/Components/Layouts/Main/LayoutMain.svelte";
 
   let { title } = $props();
 </script>

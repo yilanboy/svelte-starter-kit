@@ -7,9 +7,6 @@
         "check": "svelte-check --tsconfig ./tsconfig.json",
         "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch"
     },
-    "imports": {
-        "#components/*": "./resources/js/Components/*"
-    },
     "devDependencies": {
         "@inertiajs/svelte": "^2.0.0",
         "@sveltejs/vite-plugin-svelte": "^5.0.2",
@@ -25,6 +22,7 @@
         "tailwindcss": "^4.0.3",
         "typescript": "^5.7.2",
         "typescript-eslint": "^8.20.0",
-        "vite": "^6.0"
+        "vite": "^6.0",
+        "vite-plugin-run": "^0.6.1"
     }
 }

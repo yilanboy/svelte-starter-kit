@@ -15,7 +15,8 @@
         "paths": {
             "@inertiajs/svelte/server": [
                 "../../node_modules/@inertiajs/svelte/dist/server"
-            ]
+            ],
+            "@/*": ["./resources/js/*"]
         },
         "types": [
             "vite/client"

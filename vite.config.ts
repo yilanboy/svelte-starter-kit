@@ -2,6 +2,7 @@ import { svelte } from "@sveltejs/vite-plugin-svelte";
 import { defineConfig } from "vite";
 import laravel from "laravel-vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
+import { run } from "vite-plugin-run";
 
 export default defineConfig({
     plugins: [
@@ -12,5 +13,12 @@ export default defineConfig({
         }),
         svelte(),
         tailwindcss(),
+        run([
+            {
+                name: "wayfinder",
+                run: ["php", "artisan", "wayfinder:generate"],
+                pattern: ["routes/**/*.php", "app/**/Http/**/*.php"],
+            },
+        ]),
     ],
 });
