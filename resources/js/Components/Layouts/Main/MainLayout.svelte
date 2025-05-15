@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { inertia } from "@inertiajs/svelte";
 
   let { children } = $props();
@@ -12,13 +12,6 @@
   >
     <a use:inertia href="/" class="transition duration-150 hover:text-gray-600">
       Home
-    </a>
-    <a
-      use:inertia
-      href="/about"
-      class="transition duration-150 hover:text-gray-600"
-    >
-      About
     </a>
   </header>
   <article>

@@ -1,12 +1,13 @@
 <script lang="ts">
   import AuthLayout from "@/Components/Layouts/Auth/AuthLayout.svelte";
-  import { store } from "@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController";
+  import { store } from "@/actions/App/Http/Controllers/Auth/RegisterController";
   import { router, inertia } from "@inertiajs/svelte";
 
-  let title = "Login";
+  let title = "Register";
 
   interface Props {
     errors: {
+      name?: string;
       email?: string;
       password?: string;
     };
@@ -15,9 +16,10 @@
   let { errors }: Props = $props();
 
   let values = $state({
-    email: "",
-    password: "",
-    remember: false,
+    name: "allen",
+    email: "allen@email.com",
+    password: "1qaz2wsX",
+    password_confirmation: "1qaz2wsX",
   });
 
   function submit(event: SubmitEvent) {
@@ -37,12 +39,32 @@
       <h2
         class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900"
       >
-        Sign in to your account
+        Welcome to Join us!
       </h2>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form class="space-y-6" onsubmit={submit}>
+        <div>
+          <label for="name" class="block text-sm/6 font-medium text-gray-900">
+            Name
+          </label>
+          <div class="mt-2">
+            <input
+              bind:value={values.name}
+              type="text"
+              name="name"
+              id="name"
+              required
+              class="block w-full rounded-md bg-zinc-50 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+            />
+          </div>
+        </div>
+
+        {#if errors.name}
+          <div class="text-red-500">{errors.name}</div>
+        {/if}
+
         <div>
           <label for="email" class="block text-sm/6 font-medium text-gray-900">
             Email address
@@ -53,7 +75,6 @@
               type="email"
               name="email"
               id="email"
-              autocomplete="email"
               required
               class="block w-full rounded-md bg-zinc-50 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
             />
@@ -77,7 +98,6 @@
               type="password"
               name="password"
               id="password"
-              autocomplete="current-password"
               required
               class="block w-full rounded-md bg-zinc-50 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
             />
@@ -88,51 +108,22 @@
           <div class="text-red-500">{errors.password}</div>
         {/if}
 
-        <div class="flex items-center justify-between">
-          <div class="flex gap-3">
-            <div class="flex h-6 shrink-0 items-center">
-              <div class="group grid size-4 grid-cols-1">
-                <input
-                  bind:checked={values.remember}
-                  id="remember"
-                  name="remember"
-                  type="checkbox"
-                  class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-zinc-50 checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                />
-                <svg
-                  class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-zinc-50 group-has-disabled:stroke-gray-950/25"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                >
-                  <path
-                    class="opacity-0 group-has-checked:opacity-100"
-                    d="M3 8L6 11L11 3.5"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    class="opacity-0 group-has-indeterminate:opacity-100"
-                    d="M3 7H11"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-            </div>
-            <label for="remember" class="block text-sm/6 text-gray-900">
-              Remember me
-            </label>
-          </div>
-
-          <div class="text-sm/6">
-            <a
-              use:inertia
-              href="/forgot-password"
-              class="font-semibold text-indigo-600 hover:text-indigo-500"
-              >Forgot password?</a
-            >
+        <div>
+          <label
+            for="password_confirmation"
+            class="block text-sm/6 font-medium text-gray-900"
+          >
+            Confirm Password
+          </label>
+          <div class="mt-2">
+            <input
+              bind:value={values.password_confirmation}
+              type="password"
+              name="password_confirmation"
+              id="password_confirmation"
+              required
+              class="block w-full rounded-md bg-zinc-50 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+            />
           </div>
         </div>
 
@@ -141,19 +132,19 @@
             type="submit"
             class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-zinc-50 shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Sign in
+            Sign Up
           </button>
         </div>
       </form>
 
       <p class="mt-10 text-center text-sm/6 text-gray-500">
-        Not a member?
+        Already have an account?
         <a
           use:inertia
-          href="/register"
+          href="/login"
           class="font-semibold text-indigo-600 hover:text-indigo-500"
         >
-          Become one!
+          Sign in
         </a>
       </p>
     </div>
