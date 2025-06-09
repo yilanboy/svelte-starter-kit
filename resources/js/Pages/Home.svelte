@@ -1,7 +1,11 @@
 <script lang="ts">
   import MainLayout from "@/Components/Layouts/Main/MainLayout.svelte";
 
-  let { title } = $props();
+  interface Props {
+    title: string;
+  }
+
+  let { title }: Props = $props();
 </script>
 
 <svelte:head>
@@ -9,5 +13,7 @@
 </svelte:head>
 
 <MainLayout>
-  <h1 class="text-4xl font-semibold">Use Inertia.js with Svelte and Laravel</h1>
+  <h1 class="text-4xl font-semibold">
+    Welcome! Use Inertia.js with Svelte and Laravel
+  </h1>
 </MainLayout>

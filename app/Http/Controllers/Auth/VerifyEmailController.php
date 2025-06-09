@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 use Inertia\Response;
 
 class VerifyEmailController extends Controller
@@ -21,7 +22,7 @@ class VerifyEmailController extends Controller
 
         Session::flash('status', 'verification-link-sent');
 
-        return inertia('Auth/VerifyEmail');
+        return Inertia::render('Auth/VerifyEmail');
     }
 
     public function store(EmailVerificationRequest $request): RedirectResponse

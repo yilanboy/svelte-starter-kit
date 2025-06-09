@@ -55,7 +55,7 @@
               id="email"
               autocomplete="email"
               required
-              class="block w-full rounded-md bg-zinc-50 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+              class="block w-full rounded-md bg-zinc-50 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6"
             />
           </div>
         </div>
@@ -79,7 +79,7 @@
               id="password"
               autocomplete="current-password"
               required
-              class="block w-full rounded-md bg-zinc-50 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+              class="block w-full rounded-md bg-zinc-50 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6"
             />
           </div>
         </div>
@@ -97,7 +97,7 @@
                   id="remember"
                   name="remember"
                   type="checkbox"
-                  class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-zinc-50 checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+                  class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-zinc-50 checked:border-sky-600 checked:bg-sky-600 indeterminate:border-sky-600 indeterminate:bg-sky-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
                 />
                 <svg
                   class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-zinc-50 group-has-disabled:stroke-gray-950/25"
@@ -130,7 +130,7 @@
             <a
               use:inertia
               href="/forgot-password"
-              class="font-semibold text-indigo-600 hover:text-indigo-500"
+              class="font-semibold text-sky-600 hover:text-sky-500"
               >Forgot password?</a
             >
           </div>
@@ -139,7 +139,7 @@
         <div>
           <button
             type="submit"
-            class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-zinc-50 shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            class="flex w-full cursor-pointer justify-center rounded-md bg-sky-600 px-3 py-1.5 text-sm/6 font-semibold text-zinc-50 shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
           >
             Sign in
           </button>
@@ -151,7 +151,7 @@
         <a
           use:inertia
           href="/register"
-          class="font-semibold text-indigo-600 hover:text-indigo-500"
+          class="font-semibold text-sky-600 hover:text-sky-500"
         >
           Become one!
         </a>

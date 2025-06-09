@@ -13,6 +13,13 @@
     <a use:inertia href="/" class="transition duration-150 hover:text-gray-600">
       Home
     </a>
+    <a
+      use:inertia
+      href="/login"
+      class="transition duration-150 hover:text-gray-600"
+    >
+      Login
+    </a>
   </header>
   <article>
     {@render children?.()}
