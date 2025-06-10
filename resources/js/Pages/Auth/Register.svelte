@@ -18,8 +18,8 @@
   let values = $state({
     name: "allen",
     email: "allen@email.com",
-    password: "1qaz2wsX",
-    password_confirmation: "1qaz2wsX",
+    password: "Password101",
+    password_confirmation: "Password101",
   });
 
   function submit(event: SubmitEvent) {

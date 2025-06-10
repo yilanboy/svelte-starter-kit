@@ -29,6 +29,6 @@ class VerifyEmailController extends Controller
     {
         $request->fulfill();
 
-        return to_route('home');
+        return to_route('dashboard.index');
     }
 }
