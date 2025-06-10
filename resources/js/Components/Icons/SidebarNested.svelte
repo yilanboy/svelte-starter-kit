@@ -1,7 +1,7 @@
 <script lang="ts">
   interface Props {
     isExpanded: boolean;
-    className: string;
+    className?: string;
   }
 
   let { isExpanded = $bindable(false), className = "size-6" }: Props = $props();

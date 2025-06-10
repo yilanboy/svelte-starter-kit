@@ -14,6 +14,6 @@
 
 <MainLayout>
   <h1 class="text-4xl font-semibold">
-    Welcome! Use Inertia.js with Svelte and Laravel
+    Welcome! This is a simple example to use Inertia.js with Svelte and Laravel
   </h1>
 </MainLayout>

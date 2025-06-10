@@ -26,6 +26,10 @@ Route::post('/register', [RegisterController::class, 'store'])
     ->name('register.store')
     ->middleware('guest');
 
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout')
+    ->middleware('auth');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard.index')
     ->middleware('auth');
