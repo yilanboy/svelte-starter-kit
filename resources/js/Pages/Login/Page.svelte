@@ -1,20 +1,11 @@
 <script lang="ts">
-  import AuthLayout from "@/Components/Layouts/Auth/AuthLayout.svelte";
   import { store } from "@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController";
-  import { router, inertia } from "@inertiajs/svelte";
+  import { inertia, useForm } from "@inertiajs/svelte";
+  import Check from "@/Components/Icons/Check.svelte";
 
   let title = "Login";
 
-  interface Props {
-    errors: {
-      email?: string;
-      password?: string;
-    };
-  }
-
-  let { errors }: Props = $props();
-
-  let values = $state({
+  const form = useForm({
     email: "",
     password: "",
     remember: false,
@@ -23,7 +14,7 @@
   function submit(event: SubmitEvent) {
     event.preventDefault();
 
-    router.post(store.url(), values);
+    $form.post(store.url());
   }
 </script>
 
@@ -31,15 +22,11 @@
   <title>{title}</title>
 </svelte:head>
 
-<AuthLayout>
-  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <h2
-        class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900"
-      >
-        Sign in to your account
-      </h2>
-    </div>
+<div class="font-source-sans-3 flex min-h-screen w-full flex-col bg-zinc-50">
+  <main class="flex w-full flex-1 flex-col justify-center p-6">
+    <h2 class="text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+      Sign in to your account
+    </h2>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form class="space-y-6" onsubmit={submit}>
@@ -49,7 +36,7 @@
           </label>
           <div class="mt-2">
             <input
-              bind:value={values.email}
+              bind:value={$form.email}
               type="email"
               name="email"
               id="email"
@@ -60,8 +47,8 @@
           </div>
         </div>
 
-        {#if errors.email}
-          <div class="text-red-500">{errors.email}</div>
+        {#if $form.errors.email}
+          <div class="text-red-500">{$form.errors.email}</div>
         {/if}
 
         <div>
@@ -73,7 +60,7 @@
           </label>
           <div class="mt-2">
             <input
-              bind:value={values.password}
+              bind:value={$form.password}
               type="password"
               name="password"
               id="password"
@@ -84,8 +71,8 @@
           </div>
         </div>
 
-        {#if errors.password}
-          <div class="text-red-500">{errors.password}</div>
+        {#if $form.errors.password}
+          <div class="text-red-500">{$form.errors.password}</div>
         {/if}
 
         <div class="flex items-center justify-between">
@@ -93,32 +80,16 @@
             <div class="flex h-6 shrink-0 items-center">
               <div class="group grid size-4 grid-cols-1">
                 <input
-                  bind:checked={values.remember}
+                  bind:checked={$form.remember}
                   id="remember"
                   name="remember"
                   type="checkbox"
                   class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-zinc-50 checked:border-sky-600 checked:bg-sky-600 indeterminate:border-sky-600 indeterminate:bg-sky-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
                 />
-                <svg
-                  class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-zinc-50 group-has-disabled:stroke-gray-950/25"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                >
-                  <path
-                    class="opacity-0 group-has-checked:opacity-100"
-                    d="M3 8L6 11L11 3.5"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    class="opacity-0 group-has-indeterminate:opacity-100"
-                    d="M3 7H11"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
+
+                <Check
+                  className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center fill-zinc-50 group-has-disabled:stroke-gray-950/25"
+                />
               </div>
             </div>
             <label for="remember" class="block text-sm/6 text-gray-900">
@@ -157,5 +128,5 @@
         </a>
       </p>
     </div>
-  </div>
-</AuthLayout>
+  </main>
+</div>

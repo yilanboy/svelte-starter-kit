@@ -16,7 +16,7 @@ class RegisterController extends Controller
 {
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        return Inertia::render('Register/Page');
     }
 
     public function store(RegisterRequest $request): RedirectResponse

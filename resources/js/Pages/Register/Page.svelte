@@ -1,21 +1,10 @@
 <script lang="ts">
-  import AuthLayout from "@/Components/Layouts/Auth/AuthLayout.svelte";
   import { store } from "@/actions/App/Http/Controllers/Auth/RegisterController";
-  import { router, inertia } from "@inertiajs/svelte";
+  import { inertia, useForm } from "@inertiajs/svelte";
 
   let title = "Register";
 
-  interface Props {
-    errors: {
-      name?: string;
-      email?: string;
-      password?: string;
-    };
-  }
-
-  let { errors }: Props = $props();
-
-  let values = $state({
+  const form = useForm({
     name: "allen",
     email: "allen@email.com",
     password: "Password101",
@@ -25,7 +14,7 @@
   function submit(event: SubmitEvent) {
     event.preventDefault();
 
-    router.post(store.url(), values);
+    $form.post(store.url());
   }
 </script>
 
@@ -33,15 +22,11 @@
   <title>{title}</title>
 </svelte:head>
 
-<AuthLayout>
-  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <h2
-        class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900"
-      >
-        Welcome to Join us!
-      </h2>
-    </div>
+<div class="font-source-sans-3 flex min-h-screen w-full flex-col bg-zinc-50">
+  <main class="flex w-full flex-1 flex-col justify-center p-6">
+    <h2 class="text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+      Welcome to Join us!
+    </h2>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form class="space-y-6" onsubmit={submit}>
@@ -51,7 +36,7 @@
           </label>
           <div class="mt-2">
             <input
-              bind:value={values.name}
+              bind:value={$form.name}
               type="text"
               name="name"
               id="name"
@@ -61,8 +46,8 @@
           </div>
         </div>
 
-        {#if errors.name}
-          <div class="text-red-500">{errors.name}</div>
+        {#if $form.errors.name}
+          <div class="text-red-500">{$form.errors.name}</div>
         {/if}
 
         <div>
@@ -71,7 +56,7 @@
           </label>
           <div class="mt-2">
             <input
-              bind:value={values.email}
+              bind:value={$form.email}
               type="email"
               name="email"
               id="email"
@@ -81,8 +66,8 @@
           </div>
         </div>
 
-        {#if errors.email}
-          <div class="text-red-500">{errors.email}</div>
+        {#if $form.errors.email}
+          <div class="text-red-500">{$form.errors.email}</div>
         {/if}
 
         <div>
@@ -94,7 +79,7 @@
           </label>
           <div class="mt-2">
             <input
-              bind:value={values.password}
+              bind:value={$form.password}
               type="password"
               name="password"
               id="password"
@@ -104,8 +89,8 @@
           </div>
         </div>
 
-        {#if errors.password}
-          <div class="text-red-500">{errors.password}</div>
+        {#if $form.errors.password}
+          <div class="text-red-500">{$form.errors.password}</div>
         {/if}
 
         <div>
@@ -117,7 +102,7 @@
           </label>
           <div class="mt-2">
             <input
-              bind:value={values.password_confirmation}
+              bind:value={$form.password_confirmation}
               type="password"
               name="password_confirmation"
               id="password_confirmation"
@@ -148,5 +133,5 @@
         </a>
       </p>
     </div>
-  </div>
-</AuthLayout>
+  </main>
+</div>

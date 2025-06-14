@@ -31,8 +31,8 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->name('dashboard.index')
-    ->middleware('auth');
+    ->name('dashboard')
+    ->middleware(['auth', 'verified']);
 
 Route::get('/email/verify', [VerifyEmailController::class, 'create'])
     ->middleware('auth')

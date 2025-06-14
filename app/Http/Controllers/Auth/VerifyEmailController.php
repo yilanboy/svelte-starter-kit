@@ -22,13 +22,13 @@ class VerifyEmailController extends Controller
 
         Session::flash('status', 'verification-link-sent');
 
-        return Inertia::render('Auth/VerifyEmail');
+        return Inertia::render('VerifyEmail/Page');
     }
 
     public function store(EmailVerificationRequest $request): RedirectResponse
     {
         $request->fulfill();
 
-        return to_route('dashboard.index');
+        return to_route('dashboard');
     }
 }
