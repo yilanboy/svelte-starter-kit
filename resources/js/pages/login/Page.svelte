@@ -1,7 +1,7 @@
 <script lang="ts">
   import { store } from "@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController";
   import { inertia, useForm } from "@inertiajs/svelte";
-  import Check from "@/Components/Icons/Check.svelte";
+  import Check from "@/components/icons/Check.svelte";
 
   let title = "Login";
 
@@ -23,7 +23,7 @@
 </svelte:head>
 
 <div class="font-source-sans-3 flex min-h-screen w-full flex-col bg-zinc-50">
-  <main class="flex w-full flex-1 flex-col justify-center p-6">
+  <main class="flex w-full grow flex-col justify-center p-6">
     <h2 class="text-center text-2xl/9 font-bold tracking-tight text-gray-900">
       Sign in to your account
     </h2>

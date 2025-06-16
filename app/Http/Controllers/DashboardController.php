@@ -9,7 +9,7 @@ class DashboardController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Dashboard/Page', [
+        return Inertia::render('dashboard/Page', [
             'title' => 'Dashboard',
         ]);
     }

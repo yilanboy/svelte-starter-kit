@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { inertia } from "@inertiajs/svelte";
+
   let title = "Verify Email";
 </script>
 
@@ -7,9 +9,17 @@
 </svelte:head>
 
 <div class="font-source-sans-3 flex min-h-screen w-full flex-col bg-zinc-50">
-  <main class="flex w-full flex-1 flex-col items-center justify-center p-6">
+  <main class="flex w-full grow flex-col items-center justify-center p-6">
     <h1 class="text-4xl font-semibold">
       Please check your email to verify your account. 😊
     </h1>
+
+    <button
+      use:inertia={{ href: "/email/verify", method: "post" }}
+      type="button"
+      class="mt-6 cursor-pointer text-xl hover:underline"
+    >
+      Resend
+    </button>
   </main>
 </div>

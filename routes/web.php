@@ -34,9 +34,13 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard')
     ->middleware(['auth', 'verified']);
 
-Route::get('/email/verify', [VerifyEmailController::class, 'create'])
+Route::get('/email/verify', [VerifyEmailController::class, 'show'])
     ->middleware('auth')
     ->name('verification.notice');
+
+Route::post('/email/verify', [VerifyEmailController::class, 'create'])
+    ->middleware('auth')
+    ->name('verification.send');
 
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'store'])
     ->middleware(['auth', 'signed', 'throttle:6,1'])

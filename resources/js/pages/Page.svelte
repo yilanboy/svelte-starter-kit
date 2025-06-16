@@ -31,7 +31,7 @@
     </a>
   </header>
 
-  <main class="flex w-full flex-1 flex-col items-center justify-center p-6">
+  <main class="flex w-full grow flex-col items-center justify-center p-6">
     <h1 class="text-4xl font-semibold">
       Welcome! This is a simple example to use Inertia.js with Svelte and
       Laravel

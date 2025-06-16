@@ -12,6 +12,15 @@ use Inertia\Response;
 
 class VerifyEmailController extends Controller
 {
+    public function show(Request $request)
+    {
+        if ($request->user()->hasVerifiedEmail()) {
+            return redirect()->back();
+        }
+
+        return Inertia::render('verify/email/Page');
+    }
+
     public function create(Request $request): RedirectResponse|Response
     {
         if ($request->user()->hasVerifiedEmail()) {
@@ -22,7 +31,7 @@ class VerifyEmailController extends Controller
 
         Session::flash('status', 'verification-link-sent');
 
-        return Inertia::render('VerifyEmail/Page');
+        return Inertia::render('verify/email/Page');
     }
 
     public function store(EmailVerificationRequest $request): RedirectResponse
