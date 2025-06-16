@@ -11,7 +11,13 @@
         "module": "esnext",
         "moduleResolution": "bundler",
         "target": "esnext",
-        "verbatimModuleSyntax": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "lib": [
+            "esnext",
+            "dom",
+            "dom.iterable"
+        ],
         "paths": {
             "@inertiajs/svelte/server": [
                 "../../node_modules/@inertiajs/svelte/dist/server"
