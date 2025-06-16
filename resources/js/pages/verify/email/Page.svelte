@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { inertia } from "@inertiajs/svelte";
+  import { inertia, page } from "@inertiajs/svelte";
 
   let title = "Verify Email";
 </script>
@@ -21,5 +21,9 @@
     >
       Resend
     </button>
+
+    {#if $page.props.flash.message}
+      <div class="text-green-500">{$page.props.flash.message}</div>
+    {/if}
   </main>
 </div>

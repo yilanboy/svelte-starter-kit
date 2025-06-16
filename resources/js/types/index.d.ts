@@ -8,8 +8,13 @@ export interface User {
     email: string;
 }
 
+export interface Flash {
+    message: string;
+}
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {
     auth: Auth;
+    flash: Flash;
 };
