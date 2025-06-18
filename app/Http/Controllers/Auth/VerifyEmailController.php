@@ -28,7 +28,7 @@ class VerifyEmailController extends Controller
 
         $request->user()->sendEmailVerificationNotification();
 
-        return back()->with('message', 'Email verification link sent!');
+        return back()->with('success', 'Email verification link sent!');
     }
 
     public function store(EmailVerificationRequest $request): RedirectResponse

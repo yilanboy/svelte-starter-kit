@@ -1,6 +1,9 @@
 <script lang="ts">
   import { store } from "@/actions/App/Http/Controllers/Auth/ForgotPasswordController";
-  import { useForm } from "@inertiajs/svelte";
+  import { useForm, page } from "@inertiajs/svelte";
+  import CircleCheck from "@/components/icons/CircleCheck.svelte";
+  import { fade } from "svelte/transition";
+  import CircleX from "@/components/icons/CircleX.svelte";
 
   let title = "Forgot Password";
 
@@ -25,10 +28,46 @@
       Forgot Your Password?
     </h2>
 
+    {#if $page.props.flash.success}
+      <div
+        in:fade
+        class="mt-10 rounded-md bg-green-50 p-4 sm:mx-auto sm:w-full sm:max-w-sm"
+      >
+        <div class="flex items-center">
+          <div class="shrink-0">
+            <CircleCheck className="size-5 text-green-400" />
+          </div>
+          <div class="ml-3">
+            <p class="text-base font-medium text-green-700">
+              {$page.props.flash.success}
+            </p>
+          </div>
+        </div>
+      </div>
+    {/if}
+
+    {#if $page.props.flash.error}
+      <div
+        in:fade
+        class="mt-10 rounded-md bg-red-50 p-4 sm:mx-auto sm:w-full sm:max-w-sm"
+      >
+        <div class="flex items-center">
+          <div class="shrink-0">
+            <CircleX className="size-5 text-red-400" />
+          </div>
+          <div class="ml-3">
+            <p class="text-base font-medium text-red-700">
+              {$page.props.flash.error}
+            </p>
+          </div>
+        </div>
+      </div>
+    {/if}
+
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form class="space-y-6" onsubmit={submit}>
         <div>
-          <label for="email" class="block text-sm/6 font-medium text-gray-900">
+          <label for="email" class="block text-base font-medium text-gray-900">
             Email address
           </label>
           <div class="mt-2">
@@ -39,7 +78,7 @@
               id="email"
               autocomplete="email"
               required
-              class="block w-full rounded-md bg-zinc-50 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6"
+              class="block w-full rounded-md bg-zinc-50 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600"
             />
           </div>
         </div>
@@ -51,7 +90,7 @@
         <div>
           <button
             type="submit"
-            class="flex w-full cursor-pointer justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm/6 font-semibold text-zinc-50 shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            class="flex w-full cursor-pointer justify-center rounded-md bg-blue-600 px-3 py-1.5 text-base font-semibold text-zinc-50 shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
           >
             Send Reset Link
           </button>

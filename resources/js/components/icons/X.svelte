@@ -13,6 +13,6 @@
     stroke-linecap="round"
     stroke-linejoin="round"
     stroke-width="2"
-    d="M20 6L9 17l-5-5"
+    d="M18 6L6 18M6 6l12 12"
   />
 </svg>

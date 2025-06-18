@@ -9,7 +9,8 @@ export interface User {
 }
 
 export interface Flash {
-    message: string;
+    success: string;
+    error: string;
 }
 
 export type PageProps<
