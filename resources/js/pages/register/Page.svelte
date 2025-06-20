@@ -1,6 +1,7 @@
 <script lang="ts">
   import { store } from "@/actions/App/Http/Controllers/Auth/RegisterController";
   import { inertia, useForm } from "@inertiajs/svelte";
+  import ArrowLeft from "@/components/icons/ArrowLeft.svelte";
 
   let title = "Register";
 
@@ -10,6 +11,10 @@
     password: "Password101",
     password_confirmation: "Password101",
   });
+
+  function back() {
+    window.history.back();
+  }
 
   function submit(event: SubmitEvent) {
     event.preventDefault();
@@ -23,6 +28,17 @@
 </svelte:head>
 
 <div class="font-source-sans-3 flex min-h-screen w-full flex-col bg-zinc-50">
+  <header class="flex w-full items-center justify-start p-2">
+    <button
+      type="button"
+      onclick={back}
+      class="flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 transition duration-150 hover:bg-zinc-100"
+    >
+      <ArrowLeft className="size-3" />
+      <span class="text-base">Go back</span>
+    </button>
+  </header>
+
   <main class="flex w-full grow flex-col justify-center p-6">
     <h2 class="text-center text-2xl/9 font-bold tracking-tight text-gray-900">
       Welcome to Join us!
