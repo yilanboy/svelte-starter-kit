@@ -26,7 +26,45 @@
   <title>{title}</title>
 </svelte:head>
 
-<div class="font-source-sans-3 flex min-h-screen w-full flex-col bg-zinc-50">
+<div
+  class="font-source-sans-3 relative flex min-h-screen w-full flex-col bg-zinc-50"
+>
+  {#if $page.props.flash.success}
+    <div
+      in:fade
+      class="absolute top-4 right-1/2 left-1/2 -translate-x-1/2 rounded-md bg-green-50 p-4 sm:w-full sm:max-w-sm"
+    >
+      <div class="flex items-center">
+        <div class="shrink-0">
+          <CircleCheck className="size-5 text-green-400" />
+        </div>
+        <div class="ml-3">
+          <p class="text-base font-medium text-green-700">
+            {$page.props.flash.success}
+          </p>
+        </div>
+      </div>
+    </div>
+  {/if}
+
+  {#if $page.props.flash.error}
+    <div
+      in:fade
+      class="absolute top-4 right-1/2 left-1/2 -translate-x-1/2 rounded-md bg-red-50 p-4 sm:w-full sm:max-w-sm"
+    >
+      <div class="flex items-center">
+        <div class="shrink-0">
+          <CircleX className="size-5 text-red-400" />
+        </div>
+        <div class="ml-3">
+          <p class="text-base font-medium text-red-700">
+            {$page.props.flash.error}
+          </p>
+        </div>
+      </div>
+    </div>
+  {/if}
+
   <header class="flex w-full items-center justify-start p-4">
     <button
       type="button"
@@ -42,42 +80,6 @@
     <h2 class="text-center text-2xl/9 font-bold tracking-tight text-gray-900">
       Forgot Your Password?
     </h2>
-
-    {#if $page.props.flash.success}
-      <div
-        in:fade
-        class="mt-10 rounded-md bg-green-50 p-4 sm:mx-auto sm:w-full sm:max-w-sm"
-      >
-        <div class="flex items-center">
-          <div class="shrink-0">
-            <CircleCheck className="size-5 text-green-400" />
-          </div>
-          <div class="ml-3">
-            <p class="text-base font-medium text-green-700">
-              {$page.props.flash.success}
-            </p>
-          </div>
-        </div>
-      </div>
-    {/if}
-
-    {#if $page.props.flash.error}
-      <div
-        in:fade
-        class="mt-10 rounded-md bg-red-50 p-4 sm:mx-auto sm:w-full sm:max-w-sm"
-      >
-        <div class="flex items-center">
-          <div class="shrink-0">
-            <CircleX className="size-5 text-red-400" />
-          </div>
-          <div class="ml-3">
-            <p class="text-base font-medium text-red-700">
-              {$page.props.flash.error}
-            </p>
-          </div>
-        </div>
-      </div>
-    {/if}
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form class="space-y-6" onsubmit={submit}>

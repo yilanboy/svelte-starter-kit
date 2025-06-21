@@ -39,7 +39,27 @@
   <title>{title}</title>
 </svelte:head>
 
-<div class="font-source-sans-3 flex min-h-screen w-full flex-col bg-zinc-100">
+<div
+  class="font-source-sans-3 relative flex min-h-screen w-full flex-col bg-zinc-100"
+>
+  {#if $page.props.flash.success && showCountdown}
+    <div
+      in:fade
+      class="absolute top-4 right-1/2 left-1/2 -translate-x-1/2 rounded-md bg-green-50 p-4 sm:w-full sm:max-w-sm"
+    >
+      <div class="flex items-center">
+        <div class="shrink-0">
+          <CircleCheck className="size-5 text-green-400" />
+        </div>
+        <div class="ml-3">
+          <p class="text-base font-medium text-green-700">
+            {$page.props.flash.success}
+          </p>
+        </div>
+      </div>
+    </div>
+  {/if}
+
   <main class="flex w-full grow flex-col items-center justify-center gap-6 p-6">
     <div class="bg-zinc-50 shadow-sm sm:rounded-lg">
       <div class="px-4 py-5 sm:p-6">
@@ -53,21 +73,6 @@
             receive the verification email, click the button below to resend.
           </p>
         </div>
-
-        {#if $page.props.flash.success && showCountdown}
-          <div in:fade class="mt-5 w-full rounded-md bg-green-50 p-4">
-            <div class="flex items-center">
-              <div class="shrink-0">
-                <CircleCheck className="size-5 text-green-400" />
-              </div>
-              <div class="ml-3">
-                <p class="text-base font-medium text-green-700">
-                  {$page.props.flash.success}
-                </p>
-              </div>
-            </div>
-          </div>
-        {/if}
 
         <div class="mt-5">
           <button
