@@ -25,6 +25,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        Inertia::clearHistory();
+
         return redirect()->intended(route('dashboard'));
     }
 
@@ -35,6 +37,8 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
+        Inertia::clearHistory();
 
         return redirect(route('login'));
     }
