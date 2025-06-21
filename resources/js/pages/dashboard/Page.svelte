@@ -42,7 +42,7 @@
       duration,
       easing: cubicOut,
       css: (t: number) => `
-        transform: scale(${t});
+        transform: scale(${0.75 + t * 0.25});
         opacity: ${t};
         transform-origin: top right;`,
     };
@@ -245,7 +245,7 @@
               <!-- Dropdown menu, show/hide based on dropdownIsOpen state. -->
               {#if dropdownIsOpen}
                 <div
-                  transition:scaleFromTopRight={{ delay: 0, duration: 200 }}
+                  transition:scaleFromTopRight={{ delay: 0, duration: 100 }}
                   class="absolute right-0 z-10 mt-2.5 w-32 rounded-md bg-zinc-50 py-2 shadow-lg ring-1 ring-zinc-900/5 focus:outline-hidden"
                   role="menu"
                   aria-orientation="vertical"
