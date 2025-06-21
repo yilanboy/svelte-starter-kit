@@ -2,7 +2,7 @@
   import { store } from "@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController";
   import { inertia, useForm } from "@inertiajs/svelte";
   import Check from "@/components/icons/Check.svelte";
-  import ArrowLeft from "@/components/icons/ArrowLeft.svelte";
+  import ChevronLeft from "@/components/icons/ChevronLeft.svelte";
 
   let title = "Login";
 
@@ -34,7 +34,7 @@
       onclick={back}
       class="flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 transition duration-150 hover:bg-zinc-100"
     >
-      <ArrowLeft className="size-3" />
+      <ChevronLeft className="size-4" />
       <span class="text-lg">Go back</span>
     </button>
   </header>

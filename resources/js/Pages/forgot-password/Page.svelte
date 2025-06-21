@@ -2,9 +2,9 @@
   import { store } from "@/actions/App/Http/Controllers/Auth/ForgotPasswordController";
   import { useForm, page } from "@inertiajs/svelte";
   import CircleCheck from "@/components/icons/CircleCheck.svelte";
-  import { fade } from "svelte/transition";
+  import { fly } from "svelte/transition";
   import CircleX from "@/components/icons/CircleX.svelte";
-  import ArrowLeft from "@/components/icons/ArrowLeft.svelte";
+  import ChevronLeft from "@/components/icons/ChevronLeft.svelte";
 
   let title = "Forgot Password";
 
@@ -31,7 +31,7 @@
 >
   {#if $page.props.flash.success}
     <div
-      in:fade
+      transition:fly={{ y: -100 }}
       class="absolute top-4 right-1/2 left-1/2 -translate-x-1/2 rounded-md bg-green-50 p-4 sm:w-full sm:max-w-sm"
     >
       <div class="flex items-center">
@@ -49,7 +49,7 @@
 
   {#if $page.props.flash.error}
     <div
-      in:fade
+      transition:fly={{ y: -100 }}
       class="absolute top-4 right-1/2 left-1/2 -translate-x-1/2 rounded-md bg-red-50 p-4 sm:w-full sm:max-w-sm"
     >
       <div class="flex items-center">
@@ -71,7 +71,7 @@
       onclick={back}
       class="flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 transition duration-150 hover:bg-zinc-100"
     >
-      <ArrowLeft className="size-3" />
+      <ChevronLeft className="size-4" />
       <span class="text-lg">Go back</span>
     </button>
   </header>
