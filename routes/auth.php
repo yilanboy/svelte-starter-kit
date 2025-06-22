@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Middleware\InertiaAuthenticateMiddleware;
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
     ->name('login')
@@ -16,7 +17,7 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout')
-    ->middleware('auth');
+    ->middleware(InertiaAuthenticateMiddleware::class);
 
 Route::get('/register', [RegisterController::class, 'create'])
     ->name('register')
@@ -27,15 +28,15 @@ Route::post('/register', [RegisterController::class, 'store'])
     ->middleware('guest');
 
 Route::get('/email/verify', [VerifyEmailController::class, 'show'])
-    ->middleware('auth')
+    ->middleware(InertiaAuthenticateMiddleware::class)
     ->name('verification.notice');
 
 Route::post('/email/verify', [VerifyEmailController::class, 'create'])
-    ->middleware(['auth', 'throttle:6,1'])
+    ->middleware([InertiaAuthenticateMiddleware::class, 'throttle:6,1'])
     ->name('verification.send');
 
 Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, 'store'])
-    ->middleware(['auth', 'signed', 'throttle:6,1'])
+    ->middleware([InertiaAuthenticateMiddleware::class, 'signed', 'throttle:6,1'])
     ->name('verification.verify');
 
 Route::get('/forgot-password', [ForgotPasswordController::class, 'create'])
