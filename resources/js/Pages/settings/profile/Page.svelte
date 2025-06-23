@@ -1,6 +1,6 @@
 <script lang="ts">
   import LayoutMain from "@/components/layouts/main/LayoutMain.svelte";
-  import { inertia } from "@inertiajs/svelte";
+  import { inertia, page } from "@inertiajs/svelte";
 </script>
 
 <LayoutMain>
@@ -18,7 +18,11 @@
               <a
                 use:inertia
                 href="/settings/profile"
-                class="block rounded-md px-4 py-2 hover:bg-zinc-100"
+                class={{
+                  "bg-zinc-100": $page.url === "/settings/profile",
+                  "hover:bg-zinc-100": $page.url !== "/settings/profile",
+                  "block rounded-md px-4 py-2 ": true,
+                }}
               >
                 Profile
               </a>
@@ -27,7 +31,11 @@
               <a
                 use:inertia
                 href="/settings/password"
-                class="block rounded-md px-4 py-2 hover:bg-zinc-100"
+                class={{
+                  "bg-zinc-100": $page.url === "/settings/password",
+                  "hover:bg-zinc-100": $page.url !== "/settings/password",
+                  "block rounded-md px-4 py-2 ": true,
+                }}
               >
                 Password
               </a>
