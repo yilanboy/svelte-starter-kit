@@ -1,7 +1,17 @@
 <script lang="ts">
   import LayoutMain from "@/components/layouts/main/LayoutMain.svelte";
   import { inertia, page } from "@inertiajs/svelte";
+
+  interface Props {
+    title: string;
+  }
+
+  let { title }: Props = $props();
 </script>
+
+<svelte:head>
+  <title>{title}</title>
+</svelte:head>
 
 <LayoutMain>
   <main class="grow py-10">
