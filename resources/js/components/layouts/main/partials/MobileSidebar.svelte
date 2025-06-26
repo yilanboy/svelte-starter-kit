@@ -1,7 +1,6 @@
 <script lang="ts">
   import { inertia, page } from "@inertiajs/svelte";
   import Home from "@/components/icons/Home.svelte";
-  import Settings from "@/components/icons/Settings.svelte";
   import X from "@/components/icons/X.svelte";
   import { fly, fade } from "svelte/transition";
 
