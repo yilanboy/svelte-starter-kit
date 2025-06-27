@@ -65,9 +65,10 @@
                       use:inertia
                       href={DashboardController.index().url}
                       class={{
-                        "bg-zinc-100 text-blue-600": $page.url === "/dashboard",
+                        "bg-zinc-100 text-blue-600":
+                          $page.url === DashboardController.index().url,
                         "text-zinc-700 hover:bg-zinc-100 hover:text-blue-600":
-                          $page.url !== "/dashboard",
+                          $page.url !== DashboardController.index().url,
                         "-mx-2 flex gap-x-3 rounded-md p-2 text-base font-semibold": true,
                       }}
                     >
