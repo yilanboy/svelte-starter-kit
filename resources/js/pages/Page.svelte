@@ -1,5 +1,7 @@
 <script lang="ts">
   import { inertia } from "@inertiajs/svelte";
+  import AuthenticatedSessionController from "@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController";
+  import RegisterController from "@/actions/App/Http/Controllers/Auth/RegisterController";
 
   interface Props {
     title: string;
@@ -16,7 +18,7 @@
   <header class="flex w-full items-center justify-end gap-6 p-6">
     <a
       use:inertia
-      href="/login"
+      href={AuthenticatedSessionController.create().url}
       class="text-lg transition duration-150 hover:text-gray-600"
     >
       Login
@@ -24,7 +26,7 @@
 
     <a
       use:inertia
-      href="/register"
+      href={RegisterController.create().url}
       class="text-lg transition duration-150 hover:text-gray-600"
     >
       Register

@@ -1,5 +1,7 @@
 <script lang="ts">
   import LayoutMain from "@/components/layouts/main/LayoutMain.svelte";
+  import ProfileController from "@/actions/App/Http/Controllers/ProfileController";
+  import PasswordController from "@/actions/App/Http/Controllers/PasswordController";
   import { inertia, page } from "@inertiajs/svelte";
 
   interface Props {
@@ -29,7 +31,7 @@
             <li>
               <a
                 use:inertia
-                href="/settings/profile"
+                href={ProfileController.edit().url}
                 class={{
                   "bg-zinc-100": $page.url === "/settings/profile",
                   "hover:bg-zinc-100": $page.url !== "/settings/profile",
@@ -42,7 +44,7 @@
             <li>
               <a
                 use:inertia
-                href="/settings/password"
+                href={PasswordController.edit().url}
                 class={{
                   "bg-zinc-100": $page.url === "/settings/password",
                   "hover:bg-zinc-100": $page.url !== "/settings/password",

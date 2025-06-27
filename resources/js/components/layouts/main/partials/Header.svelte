@@ -6,6 +6,8 @@
   import AlignJustify from "@/components/icons/AlignJustify.svelte";
   import { inertia, page } from "@inertiajs/svelte";
   import { cubicOut } from "svelte/easing";
+  import ProfileController from "@/actions/App/Http/Controllers/ProfileController";
+  import AuthenticatedSessionController from "@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController";
 
   interface Props {
     sidebarIsOpen: boolean;
@@ -109,7 +111,7 @@
             >
               <a
                 use:inertia
-                href="/settings/profile"
+                href={ProfileController.edit().url}
                 class="flex w-full items-center gap-2 px-3 py-1 text-left text-base text-zinc-900 hover:bg-zinc-100"
                 role="menuitem"
                 tabindex="-1"
@@ -119,7 +121,10 @@
                 <span>Settings</span>
               </a>
               <button
-                use:inertia={{ href: "/logout", method: "post" }}
+                use:inertia={{
+                  href: AuthenticatedSessionController.destroy().url,
+                  method: AuthenticatedSessionController.destroy().method,
+                }}
                 type="button"
                 class="flex w-full cursor-pointer items-center gap-2 px-3 py-1 text-left text-base text-zinc-900 hover:bg-zinc-100"
                 role="menuitem"

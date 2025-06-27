@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { store } from "@/actions/App/Http/Controllers/Auth/ForgotPasswordController";
+  import ForgotPasswordController from "@/actions/App/Http/Controllers/Auth/ForgotPasswordController";
   import { useForm, page } from "@inertiajs/svelte";
   import CircleCheck from "@/components/icons/CircleCheck.svelte";
   import { fly } from "svelte/transition";
   import CircleX from "@/components/icons/CircleX.svelte";
   import ChevronLeft from "@/components/icons/ChevronLeft.svelte";
+  import { back } from "@/helpers";
 
   let title = "Forgot Password";
 
@@ -12,13 +13,10 @@
     email: "",
   });
 
-  function back() {
-    window.history.back();
-  }
   function submit(event: SubmitEvent) {
     event.preventDefault();
 
-    $form.post(store.url());
+    $form.post(ForgotPasswordController.store().url);
   }
 </script>
 

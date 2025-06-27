@@ -21,7 +21,7 @@
   function submit(event: SubmitEvent) {
     event.preventDefault();
 
-    $form.post(update.url());
+    $form.post(update().url);
   }
 </script>
 

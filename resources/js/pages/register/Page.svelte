@@ -1,7 +1,9 @@
 <script lang="ts">
-  import { store } from "@/actions/App/Http/Controllers/Auth/RegisterController";
+  import RegisterController from "@/actions/App/Http/Controllers/Auth/RegisterController";
+  import AuthenticatedSessionController from "@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController";
   import { inertia, useForm } from "@inertiajs/svelte";
   import ChevronLeft from "@/components/icons/ChevronLeft.svelte";
+  import { back } from "@/helpers";
 
   let title = "Register";
 
@@ -12,14 +14,10 @@
     password_confirmation: "Password101",
   });
 
-  function back() {
-    window.history.back();
-  }
-
   function submit(event: SubmitEvent) {
     event.preventDefault();
 
-    $form.post(store.url());
+    $form.post(RegisterController.store().url);
   }
 </script>
 
@@ -142,7 +140,7 @@
         Already have an account?
         <a
           use:inertia
-          href="/login"
+          href={AuthenticatedSessionController.create().url}
           class="font-semibold text-blue-600 hover:text-blue-500"
         >
           Sign in

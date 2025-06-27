@@ -3,6 +3,7 @@
   import Home from "@/components/icons/Home.svelte";
   import X from "@/components/icons/X.svelte";
   import { fly, fade } from "svelte/transition";
+  import DashboardController from "@/actions/App/Http/Controllers/DashboardController";
 
   interface Props {
     sidebarIsOpen: boolean;
@@ -62,7 +63,7 @@
                       -->
                     <a
                       use:inertia
-                      href="/dashboard"
+                      href={DashboardController.index().url}
                       class={{
                         "bg-zinc-100 text-blue-600": $page.url === "/dashboard",
                         "text-zinc-700 hover:bg-zinc-100 hover:text-blue-600":

@@ -1,8 +1,11 @@
 <script lang="ts">
-  import { store } from "@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController";
+  import AuthenticatedSessionController from "@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController";
+  import RegisterController from "@/actions/App/Http/Controllers/Auth/RegisterController";
+  import ForgotPasswordController from "@/actions/App/Http/Controllers/Auth/ForgotPasswordController";
   import { inertia, useForm } from "@inertiajs/svelte";
   import Check from "@/components/icons/Check.svelte";
   import ChevronLeft from "@/components/icons/ChevronLeft.svelte";
+  import { back } from "@/helpers";
 
   let title = "Login";
 
@@ -12,14 +15,10 @@
     remember: false,
   });
 
-  function back() {
-    window.history.back();
-  }
-
   function submit(event: SubmitEvent) {
     event.preventDefault();
 
-    $form.post(store.url());
+    $form.post(AuthenticatedSessionController.store().url);
   }
 </script>
 
@@ -115,7 +114,7 @@
           <div class="text-base">
             <a
               use:inertia
-              href="/forgot-password"
+              href={ForgotPasswordController.create().url}
               class="font-semibold text-blue-600 hover:text-blue-500"
             >
               Forgot password?
@@ -137,7 +136,7 @@
         Not a member?
         <a
           use:inertia
-          href="/register"
+          href={RegisterController.create().url}
           class="font-semibold text-blue-600 hover:text-blue-500"
         >
           Become one!

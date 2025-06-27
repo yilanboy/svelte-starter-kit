@@ -1,7 +1,7 @@
 <script lang="ts">
   import Home from "@/components/icons/Home.svelte";
-  import Settings from "@/components/icons/Settings.svelte";
   import { inertia, page } from "@inertiajs/svelte";
+  import DashboardController from "@/actions/App/Http/Controllers/DashboardController";
 </script>
 
 <!-- Static sidebar for desktop -->
@@ -25,7 +25,7 @@
             <li>
               <a
                 use:inertia
-                href="/dashboard"
+                href={DashboardController.index().url}
                 class={{
                   "bg-zinc-100 text-blue-600": $page.url === "/dashboard",
                   "text-zinc-700 hover:bg-zinc-100 hover:text-blue-600":
