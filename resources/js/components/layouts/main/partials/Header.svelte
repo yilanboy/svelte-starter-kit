@@ -6,7 +6,7 @@
   import AlignJustify from "@/components/icons/AlignJustify.svelte";
   import { inertia, page } from "@inertiajs/svelte";
   import { cubicOut } from "svelte/easing";
-  import ProfileController from "@/actions/App/Http/Controllers/ProfileController";
+  import ProfileController from "@/actions/App/Http/Controllers/Settings/ProfileController";
   import AuthenticatedSessionController from "@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController";
 
   interface Props {

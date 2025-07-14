@@ -1,7 +1,7 @@
 <script lang="ts">
   import { inertia, page } from "@inertiajs/svelte";
-  import ProfileController from "@/actions/App/Http/Controllers/ProfileController";
-  import PasswordController from "@/actions/App/Http/Controllers/PasswordController";
+  import ProfileController from "@/actions/App/Http/Controllers/Settings/ProfileController";
+  import PasswordController from "@/actions/App/Http/Controllers/Settings/PasswordController";
 </script>
 
 <ul class="flex flex-col gap-1">

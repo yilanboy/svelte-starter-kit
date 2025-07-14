@@ -1,6 +1,7 @@
 <script lang="ts">
   import LayoutMain from "@/components/layouts/main/LayoutMain.svelte";
   import Navigation from "@/pages/settings/partials/Navigation.svelte";
+  import PasswordController from "@/actions/App/Http/Controllers/Settings/PasswordController";
   import { useForm } from "@inertiajs/svelte";
 
   interface Props {
@@ -9,11 +10,36 @@
 
   let { title }: Props = $props();
 
+  let currentPasswordInput: HTMLInputElement;
+  let passwordInput: HTMLInputElement;
+
   const form = useForm({
     current_password: "",
     password: "",
     password_confirmation: "",
   });
+
+  function submit(event: SubmitEvent) {
+    event.preventDefault();
+
+    $form.put(PasswordController.update().url, {
+      preserveScroll: true,
+      onSuccess: () => $form.reset(),
+      onError: (errors: any) => {
+        if (errors.password) {
+          $form.reset("password", "password_confirmation");
+
+          passwordInput.focus();
+        }
+
+        if (errors.current_password) {
+          $form.reset("current_password");
+
+          currentPasswordInput.focus();
+        }
+      },
+    });
+  }
 </script>
 
 <svelte:head>
@@ -37,7 +63,7 @@
 
         <div class="col-span-3">
           <div class="sm:w-full sm:max-w-sm">
-            <form class="space-y-6">
+            <form class="space-y-6" onsubmit={submit}>
               <div>
                 <label
                   for="current_password"
@@ -47,6 +73,7 @@
                 </label>
                 <div class="mt-2">
                   <input
+                    bind:this={currentPasswordInput}
                     bind:value={$form.current_password}
                     type="password"
                     id="current_password"
@@ -57,6 +84,10 @@
                 </div>
               </div>
 
+              {#if $form.errors.current_password}
+                <div class="text-red-500">{$form.errors.current_password}</div>
+              {/if}
+
               <div>
                 <label
                   for="password"
@@ -66,6 +97,7 @@
                 </label>
                 <div class="mt-2">
                   <input
+                    bind:this={passwordInput}
                     bind:value={$form.password}
                     type="password"
                     id="password"
@@ -75,6 +107,10 @@
                   />
                 </div>
               </div>
+
+              {#if $form.errors.password}
+                <div class="text-red-500">{$form.errors.password}</div>
+              {/if}
 
               <div>
                 <label
