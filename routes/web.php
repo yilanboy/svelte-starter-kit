@@ -17,11 +17,15 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware([InertiaAuthenticateMiddleware::class, 'verified']);
 
 Route::get('/settings/profile', [ProfileController::class, 'edit'])
-    ->name('settings.profile')
+    ->name('settings.profile.edit')
+    ->middleware([InertiaAuthenticateMiddleware::class, 'verified']);
+
+Route::patch('/settings/profile', [ProfileController::class, 'update'])
+    ->name('settings.profile.update')
     ->middleware([InertiaAuthenticateMiddleware::class, 'verified']);
 
 Route::get('/settings/password', [PasswordController::class, 'edit'])
-    ->name('settings.password')
+    ->name('settings.password.edit')
     ->middleware([InertiaAuthenticateMiddleware::class, 'verified']);
 
 Route::put('/settings/password', [PasswordController::class, 'update'])
