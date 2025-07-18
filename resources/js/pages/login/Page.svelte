@@ -18,7 +18,7 @@
   function submit(event: SubmitEvent) {
     event.preventDefault();
 
-    $form.post(AuthenticatedSessionController.store().url);
+    $form.submit(AuthenticatedSessionController.store());
   }
 </script>
 

@@ -17,7 +17,7 @@
   function submit(event: SubmitEvent) {
     event.preventDefault();
 
-    $form.post(RegisterController.store().url);
+    $form.submit(RegisterController.store());
   }
 </script>
 

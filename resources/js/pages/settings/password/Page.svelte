@@ -22,7 +22,7 @@
   function submit(event: SubmitEvent) {
     event.preventDefault();
 
-    $form.put(PasswordController.update().url, {
+    $form.submit(PasswordController.update(), {
       preserveScroll: true,
       onSuccess: () => $form.reset(),
       onError: (errors: any) => {

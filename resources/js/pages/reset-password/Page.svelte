@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { update } from "@/actions/App/Http/Controllers/Auth/ResetPasswordController";
+  import ResetPasswordController from "@/actions/App/Http/Controllers/Auth/ResetPasswordController";
   import { useForm } from "@inertiajs/svelte";
 
   interface Props {
@@ -21,7 +21,7 @@
   function submit(event: SubmitEvent) {
     event.preventDefault();
 
-    $form.post(update().url);
+    $form.submit(ResetPasswordController.update());
   }
 </script>
 

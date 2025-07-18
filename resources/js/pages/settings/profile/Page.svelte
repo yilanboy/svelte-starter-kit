@@ -20,7 +20,7 @@
   function submit(event: SubmitEvent) {
     event.preventDefault();
 
-    $form.patch(ProfileController.update().url, {
+    $form.submit(ProfileController.update(), {
       preserveScroll: true,
     });
   }

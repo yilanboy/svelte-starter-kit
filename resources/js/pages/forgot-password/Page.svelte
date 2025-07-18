@@ -16,7 +16,7 @@
   function submit(event: SubmitEvent) {
     event.preventDefault();
 
-    $form.post(ForgotPasswordController.store().url);
+    $form.submit(ForgotPasswordController.store());
   }
 </script>
 
