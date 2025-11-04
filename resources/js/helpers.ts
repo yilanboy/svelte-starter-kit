@@ -1,5 +1,13 @@
 export function back() {
-    window.history.back();
+    if (!document.startViewTransition) {
+        window.history.back();
+
+        return;
+    }
+
+    document.startViewTransition(() => {
+        window.history.back();
+    });
 }
 
 export function stopPropagation(fn: (event: Event) => void) {
