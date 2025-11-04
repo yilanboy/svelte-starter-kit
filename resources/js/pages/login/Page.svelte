@@ -2,8 +2,7 @@
   import AuthenticatedSessionController from "@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController";
   import RegisterController from "@/actions/App/Http/Controllers/Auth/RegisterController";
   import ForgotPasswordController from "@/actions/App/Http/Controllers/Auth/ForgotPasswordController";
-  import { inertia } from "@inertiajs/svelte";
-  import Check from "@/components/icons/Check.svelte";
+  import { inertia, Link } from "@inertiajs/svelte";
   import ChevronLeft from "@/components/icons/ChevronLeft.svelte";
   import { back } from "@/helpers";
   import { Form } from "@inertiajs/svelte";
@@ -105,13 +104,13 @@
 
       <p class="mt-10 text-center text-base text-gray-500">
         Not a member?
-        <a
-          use:inertia
+        <Link
           href={RegisterController.create().url}
           class="font-semibold text-blue-600 hover:text-blue-500"
+          viewTransition
         >
           Become one!
-        </a>
+        </Link>
       </p>
     </div>
   </main>
