@@ -5,12 +5,19 @@
     label: string;
     id: string;
     name: string;
-    type: string;
-    required: boolean;
+    type?: string;
+    required?: boolean;
     autocomplete?: FullAutoFill;
   }
 
-  let { label, id, name, type, required, autocomplete }: Props = $props();
+  let {
+    label,
+    id,
+    name,
+    type = "text",
+    required = false,
+    autocomplete,
+  }: Props = $props();
 </script>
 
 <div>
