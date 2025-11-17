@@ -17,6 +17,7 @@
         "axios": "^1.10.0",
         "laravel-vite-plugin": "^2.0.0",
         "lodash": "^4.17.21",
+        "playwright": "^1.56.1",
         "prettier": "^3.6.2",
         "prettier-plugin-svelte": "^3.4.0",
         "prettier-plugin-tailwindcss": "^0.6.14",
