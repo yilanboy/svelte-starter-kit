@@ -356,15 +356,10 @@
     options = {
       description: "",
       type: "default",
-      position: "top-center",
-      html: "<p>Hello world!</p>",
+      position: "top-right",
+      html: '<p class="p-4">Hello world!</p>',
     },
   ) {
-    const event = new CustomEvent("set-toasts-layout", {
-      detail: { layout: "default" },
-    });
-    window.dispatchEvent(event);
-
     let description = "";
     let type = "default";
     let position = "top-center";
