@@ -78,6 +78,7 @@
     }
   }
 
+  // 初始化 toasts
   function stackToasts() {
     positionToasts();
     calculateHeightOfToastsContainer();
@@ -320,12 +321,14 @@
     }
   }
 
+  // 調整 toasts 的顯示方式，預設為折疊，可以改為展開
   function onSetToastsLayout(event: CustomEvent) {
     layout = event.detail.layout;
     expanded = layout === "expanded";
     stackToasts();
   }
 
+  // 開始顯示 toasts，新增一個 toast 在 toasts 列表
   function onToastShow(event: CustomEvent) {
     event.stopPropagation();
 
@@ -343,15 +346,8 @@
     });
   }
 
-  onMount(() => {
-    if (layout == "expanded") {
-      expanded = true;
-    }
-
-    stackToasts();
-  });
-
-  function openToast(
+  // 觸發 onToastShow 事件，新增一個 toast
+  function popToast(
     message = "hello",
     options = {
       description: "",
@@ -384,6 +380,7 @@
     );
   }
 
+  // 原本 Alpine.js 版本這個是根據 toastsHovered 的值是否變化而觸發
   $effect(() => {
     if (layout === "default") {
       if (position.includes("bottom")) {
@@ -411,13 +408,19 @@
       }
     }
   });
+
+  onMount(() => {
+    if (layout == "expanded") {
+      expanded = true;
+    }
+
+    stackToasts();
+  });
 </script>
 
 <svelte:window
   onset-toasts-layout={onSetToastsLayout}
   ontoast-show={onToastShow}
-  onmouseenter={() => (toastsHovered = true)}
-  onmouseleave={() => (toastsHovered = false)}
 />
 
 <ul
@@ -430,6 +433,8 @@
     "bottom-0 left-1/2 -translate-x-1/2 sm:mb-6": position === "bottom-center",
     "group fixed z-[99] block w-full sm:max-w-xs": true,
   }}
+  onmouseenter={() => (toastsHovered = true)}
+  onmouseleave={() => (toastsHovered = false)}
   bind:this={toastsContainer}
 >
   {#each toasts as toast (toast.id)}
@@ -438,9 +443,31 @@
 </ul>
 
 <button
-  title="test"
+  title="open toast"
   type="button"
   onclick={() => {
-    openToast();
-  }}>Test</button
+    popToast();
+  }}>Open Toast</button
+>
+
+<button
+  title="default"
+  type="button"
+  onclick={() => {
+    expanded = false;
+    window.dispatchEvent(
+      new CustomEvent("set-toasts-layout", { detail: { layout: "default" } }),
+    );
+  }}>Default</button
+>
+
+<button
+  title="expanded"
+  type="button"
+  onclick={() => {
+    expanded = true;
+    window.dispatchEvent(
+      new CustomEvent("set-toasts-layout", { detail: { layout: "expanded" } }),
+    );
+  }}>Expanded</button
 >
