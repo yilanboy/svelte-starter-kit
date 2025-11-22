@@ -27,11 +27,12 @@
   const { burnToast, deleteToastWithId, stackToasts }: Context =
     getContext("toasts");
 
-  let toastContainer: HTMLLIElement;
-
   let { toasts, toast, position }: Props = $props();
 
   onMount(() => {
+    let toastContainer = document.getElementById(toast.id);
+
+    if (!toastContainer) return;
     if (!toastContainer.firstElementChild) return;
 
     if (position.includes("bottom")) {
@@ -49,6 +50,9 @@
 
     setTimeout(function () {
       setTimeout(function () {
+        let toastContainer = document.getElementById(toast.id);
+
+        if (!toastContainer) return;
         if (!toastContainer.firstElementChild) return;
 
         if (position.includes("bottom")) {
@@ -75,6 +79,9 @@
 
     setTimeout(function () {
       setTimeout(function () {
+        let toastContainer = document.getElementById(toast.id);
+
+        if (!toastContainer) return;
         if (!toastContainer.firstElementChild) return;
 
         toastContainer.firstElementChild.classList.remove("opacity-100");
@@ -92,7 +99,6 @@
 </script>
 
 <li
-  bind:this={toastContainer}
   id={toast.id}
   onmouseover={() => (toastHovered = true)}
   onfocus={() => (toastHovered = true)}
