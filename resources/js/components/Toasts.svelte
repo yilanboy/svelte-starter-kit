@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { onMount, setContext } from "svelte";
+  import { onMount } from "svelte";
   import { fly } from "svelte/transition";
-  import CircleX from "@/components/icons/CircleX.svelte";
   import X from "@/components/icons/X.svelte";
 
   interface ToastProps {
@@ -31,8 +30,6 @@
   let paddingBetweenToasts = $state(15);
 
   let toastsContainer: HTMLUListElement;
-
-  // setContext("toasts", { burnToast, deleteToastWithId, stackToasts });
 
   function deleteToastWithId(id: string) {
     for (let i = 0; i < toasts.length; i++) {
@@ -78,13 +75,9 @@
       }
       burnToastElement.classList.add("opacity-0");
 
-      // let that = this;
-
       setTimeout(function () {
-        // that.deleteToastWithId(id);
         deleteToastWithId(id);
         setTimeout(function () {
-          // that.stackToasts();
           stackToasts();
         }, 1);
       }, 300);
@@ -96,10 +89,7 @@
     positionToasts();
     calculateHeightOfToastsContainer();
 
-    // let that = this;
-
     setTimeout(function () {
-      // that.calculateHeightOfToastsContainer();
       calculateHeightOfToastsContainer();
     }, 300);
   }
@@ -121,8 +111,6 @@
         topToast.classList.add("top-0");
       }
     }
-
-    // let bottomPositionOfFirstToast = getBottomPositionOfElement(topToast);
 
     if (toasts.length == 1) return;
     let middleToast = document.getElementById(toasts[1].id);
@@ -227,14 +215,6 @@
     burnToast.firstElementChild.classList.remove("opacity-100");
     burnToast.firstElementChild.classList.add("opacity-0");
 
-    // let that = this;
-
-    // Burn 🔥 (remove) last toast
-    // setTimeout(function () {
-    //   // that.toasts.pop();
-    //   toasts.pop();
-    // }, 300);
-
     toasts.pop();
 
     if (position.includes("bottom")) {
@@ -259,14 +239,6 @@
     element2.style.top = top2 + "px";
   }
 
-  // function alignTop(element1: HTMLElement, element2: HTMLElement) {
-  //   // Get the top position of the first element
-  //   let top1 = element1.offsetTop;
-  //
-  //   // Apply the same top position to the second element
-  //   element2.style.top = top1 + "px";
-  // }
-
   function resetBottom() {
     for (let i = 0; i < toasts.length; i++) {
       if (document.getElementById(toasts[i].id)) {
@@ -287,13 +259,8 @@
     }
   }
 
-  // function getBottomPositionOfElement(el: HTMLElement) {
-  //   return el.getBoundingClientRect().height + el.getBoundingClientRect().top;
-  // }
-
   function calculateHeightOfToastsContainer() {
     if (toasts.length == 0) {
-      // $el.style.height = "0px";
       toastsContainer.style.height = "0px";
 
       return;
@@ -316,14 +283,12 @@
 
     if (toastsHovered) {
       if (position.includes("bottom")) {
-        // $el.style.height =
         toastsContainer.style.height =
           firstToastRectangle.top +
           firstToastRectangle.height -
           lastToastRectangle.top +
           "px";
       } else {
-        // $el.style.height =
         toastsContainer.style.height =
           lastToastRectangle.top +
           lastToastRectangle.height -
@@ -331,7 +296,6 @@
           "px";
       }
     } else {
-      // $el.style.height = firstToastRectangle.height + "px";
       toastsContainer.style.height = firstToastRectangle.height + "px";
     }
   }
@@ -374,7 +338,7 @@
     options = {
       description: "",
       type: "default",
-      position: "bottom-left",
+      position: "top-right",
       html: '<p class="p-4">Hello world!</p>',
     },
   ) {
@@ -461,7 +425,7 @@
     "right-0 bottom-0 sm:mr-6 sm:mb-6": position === "bottom-right",
     "bottom-0 left-0 sm:mb-6 sm:ml-6": position === "bottom-left",
     "bottom-0 left-1/2 -translate-x-1/2 sm:mb-6": position === "bottom-center",
-    "group fixed z-99 block w-full sm:max-w-xs": true,
+    "fixed z-99 block w-full sm:max-w-xs": true,
   }}
   onmouseenter={onMouseEnterToastsContainer}
   onmouseleave={onMouseLeaveToastsContainer}
@@ -536,12 +500,31 @@
 
 <div class="flex w-full justify-center gap-2 p-2">
   <button
-    title="open toast"
+    title="top right"
     type="button"
     class="cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
     onclick={() => {
-      popToast();
-    }}>Open Toast</button
+      popToast("none", {
+        description: "",
+        type: "default",
+        position: "top-right",
+        html: '<p class="p-4">Hello world!</p>',
+      });
+    }}>Top Right</button
+  >
+
+  <button
+    title="bottom left"
+    type="button"
+    class="cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+    onclick={() => {
+      popToast("none", {
+        description: "",
+        type: "default",
+        position: "bottom-left",
+        html: '<p class="p-4">Hello world!</p>',
+      });
+    }}>Bottom Left</button
   >
 
   <button
