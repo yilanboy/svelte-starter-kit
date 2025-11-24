@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount, setContext } from "svelte";
   import { fly } from "svelte/transition";
+  import CircleX from "@/components/icons/CircleX.svelte";
+  import X from "@/components/icons/X.svelte";
 
   interface ToastProps {
     id: string;
@@ -11,7 +13,9 @@
     html?: boolean;
   }
 
-  type Position =
+  type ToastsLayout = "default" | "expanded";
+
+  type ToastsPosition =
     | "top-right"
     | "top-left"
     | "top-center"
@@ -22,8 +26,8 @@
   let toasts: ToastProps[] = $state([]);
   let toastsHovered = $state(false);
   let expanded = $state(false);
-  let layout = $state("default");
-  let position: Position = $state("top-center");
+  let layout: ToastsLayout = $state("default");
+  let position: ToastsPosition = $state("top-center");
   let paddingBetweenToasts = $state(15);
 
   let toastsContainer: HTMLUListElement;
@@ -101,24 +105,24 @@
   }
 
   function positionToasts() {
+    // If there is no toast, don't do anything'
     if (toasts.length == 0) return;
 
     let topToast = document.getElementById(toasts[0].id);
 
     if (!topToast) return;
 
-    topToast.style.zIndex = (100).toString();
+    topToast.classList.add("z-100");
 
     if (expanded) {
       if (position.includes("bottom")) {
-        topToast.style.top = "auto";
-        topToast.style.bottom = "0px";
+        topToast.classList.add("top-auto", "bottom-0");
       } else {
-        topToast.style.top = "0px";
+        topToast.classList.add("top-0");
       }
     }
 
-    let bottomPositionOfFirstToast = getBottomPositionOfElement(topToast);
+    // let bottomPositionOfFirstToast = getBottomPositionOfElement(topToast);
 
     if (toasts.length == 1) return;
     let middleToast = document.getElementById(toasts[1].id);
@@ -215,7 +219,7 @@
     } else {
       burnToast.style.scale = "82%";
       alignBottom(topToast, burnToast);
-      burnToast.style.transform = "translateY(48px)";
+      // burnToast.style.transform = "translateY(48px)";
     }
 
     if (!burnToast.firstElementChild) return;
@@ -268,7 +272,7 @@
       if (document.getElementById(toasts[i].id)) {
         let toastElement = document.getElementById(toasts[i].id);
         if (!toastElement) return;
-        toastElement.style.bottom = "0px";
+        toastElement.style.bottom = "0";
       }
     }
   }
@@ -283,9 +287,9 @@
     }
   }
 
-  function getBottomPositionOfElement(el: HTMLElement) {
-    return el.getBoundingClientRect().height + el.getBoundingClientRect().top;
-  }
+  // function getBottomPositionOfElement(el: HTMLElement) {
+  //   return el.getBoundingClientRect().height + el.getBoundingClientRect().top;
+  // }
 
   function calculateHeightOfToastsContainer() {
     if (toasts.length == 0) {
@@ -358,6 +362,7 @@
 
     toasts.unshift(toast);
 
+    // burn toast after 3 seconds
     setTimeout(function () {
       deleteToastWithId(toast.id);
     }, 3000);
@@ -369,7 +374,7 @@
     options = {
       description: "",
       type: "default",
-      position: "top-right",
+      position: "bottom-left",
       html: '<p class="p-4">Hello world!</p>',
     },
   ) {
@@ -397,8 +402,9 @@
     );
   }
 
-  // 原本 Alpine.js 版本這個是根據 toastsHovered 的值是否變化而觸發
-  function onToastHoveredChange() {
+  function onMouseEnterToastsContainer() {
+    toastsHovered = true;
+
     if (layout !== "default") return;
 
     if (position.includes("bottom")) {
@@ -407,26 +413,26 @@
       resetTop();
     }
 
-    if (toastsHovered) {
-      // calculate the new positions
-      expanded = true;
-
-      if (layout === "default") {
-        stackToasts();
-      }
-    } else {
-      if (layout === "default") {
-        expanded = false;
-        //setTimeout(function(){
-        stackToasts();
-        //}, 10);
-        setTimeout(function () {
-          stackToasts();
-        }, 10);
-      }
-    }
+    expanded = true;
+    stackToasts();
   }
 
+  function onMouseLeaveToastsContainer() {
+    toastsHovered = false;
+
+    if (layout !== "default") return;
+
+    if (position.includes("bottom")) {
+      resetBottom();
+    } else {
+      resetTop();
+    }
+
+    expanded = false;
+    stackToasts();
+  }
+
+  // When new toast is added, stack toasts
   $effect(() => {
     if (toasts.length > 0) {
       stackToasts();
@@ -455,22 +461,16 @@
     "right-0 bottom-0 sm:mr-6 sm:mb-6": position === "bottom-right",
     "bottom-0 left-0 sm:mb-6 sm:ml-6": position === "bottom-left",
     "bottom-0 left-1/2 -translate-x-1/2 sm:mb-6": position === "bottom-center",
-    "group fixed z-[99] block w-full sm:max-w-xs": true,
+    "group fixed z-99 block w-full sm:max-w-xs": true,
   }}
-  onmouseenter={() => {
-    toastsHovered = true;
-    onToastHoveredChange();
-  }}
-  onmouseleave={() => {
-    toastsHovered = false;
-    onToastHoveredChange();
-  }}
+  onmouseenter={onMouseEnterToastsContainer}
+  onmouseleave={onMouseLeaveToastsContainer}
   bind:this={toastsContainer}
 >
   {#each toasts as toast (toast.id)}
     <li
-      in:fly={{ y: -200, duration: 300 }}
-      out:fly={{ y: -50, duration: 300, delay: 300 }}
+      in:fly={{ y: -200, duration: 300, opacity: 100 }}
+      out:fly={{ y: -50, duration: 300, delay: 300, opacity: 0 }}
       id={toast.id}
       class={{
         "toast-no-description": !toast.description,
@@ -484,7 +484,9 @@
           "group relative flex w-full flex-col items-start border border-gray-100 bg-white shadow-[0_5px_15px_-3px_rgb(0_0_0_/_0.08)] transition-all duration-300 ease-out sm:max-w-xs sm:rounded-md": true,
         }}
       >
-        {#if !toast.html}
+        {#if toast.html}
+          <div>{@html toast.html}</div>
+        {:else}
           <div class="relative">
             <div
               class={{
@@ -512,9 +514,7 @@
             {/if}
           </div>
         {/if}
-        {#if toast.html}
-          <div>{@html toast.html}</div>
-        {/if}
+
         <button
           title="burn-toast"
           type="button"
@@ -524,51 +524,49 @@
           class={{
             "top-1/2 -translate-y-1/2": !toast.description && !toast.html,
             "top-0 mt-2.5": toast.description || toast.html,
-            "absolute right-0 mr-2.5 cursor-pointer rounded-full p-1.5 text-gray-400 opacity-0 duration-100 ease-in-out hover:bg-gray-50 hover:text-gray-500": true,
+            "absolute right-0 mr-2.5 cursor-pointer rounded-full p-1.5 text-gray-400 opacity-0 transition duration-100 ease-in-out group-hover:opacity-100 hover:bg-gray-50 hover:text-gray-500": true,
           }}
         >
-          <svg
-            class="h-3 w-3"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-            ><path
-              fill-rule="evenodd"
-              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            ></path></svg
-          >
+          <X className="size-3" />
         </button>
       </span>
     </li>
   {/each}
 </ul>
 
-<button
-  title="open toast"
-  type="button"
-  onclick={() => {
-    popToast();
-  }}>Open Toast</button
->
+<div class="flex w-full justify-center gap-2 p-2">
+  <button
+    title="open toast"
+    type="button"
+    class="cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+    onclick={() => {
+      popToast();
+    }}>Open Toast</button
+  >
 
-<button
-  title="default"
-  type="button"
-  onclick={() => {
-    expanded = false;
-    window.dispatchEvent(
-      new CustomEvent("set-toasts-layout", { detail: { layout: "default" } }),
-    );
-  }}>Default</button
->
+  <button
+    title="default"
+    type="button"
+    class="cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+    onclick={() => {
+      expanded = false;
+      window.dispatchEvent(
+        new CustomEvent("set-toasts-layout", { detail: { layout: "default" } }),
+      );
+    }}>Default</button
+  >
 
-<button
-  title="expanded"
-  type="button"
-  onclick={() => {
-    expanded = true;
-    window.dispatchEvent(
-      new CustomEvent("set-toasts-layout", { detail: { layout: "expanded" } }),
-    );
-  }}>Expanded</button
->
+  <button
+    title="expanded"
+    type="button"
+    class="cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+    onclick={() => {
+      expanded = true;
+      window.dispatchEvent(
+        new CustomEvent("set-toasts-layout", {
+          detail: { layout: "expanded" },
+        }),
+      );
+    }}>Expanded</button
+  >
+</div>
