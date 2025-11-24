@@ -102,13 +102,15 @@
 
     if (!topToast) return;
 
-    topToast.classList.add("z-100");
+    topToast.style.zIndex = (100).toString();
 
+    // if toasts are in expanded mode, set top to 0
     if (expanded) {
-      if (position.includes("bottom")) {
-        topToast.classList.add("top-auto", "bottom-0");
+      if (position.startsWith("bottom")) {
+        topToast.style.top = "auto";
+        topToast.style.bottom = "0";
       } else {
-        topToast.classList.add("top-0");
+        topToast.style.top = "0";
       }
     }
 
@@ -123,7 +125,7 @@
       let middleToastPosition =
         topToast.getBoundingClientRect().height + paddingBetweenToasts + "px";
 
-      if (position.includes("bottom")) {
+      if (position.startsWith("bottom")) {
         middleToast.style.top = "auto";
         middleToast.style.bottom = middleToastPosition;
       } else {
@@ -158,7 +160,7 @@
         paddingBetweenToasts +
         "px";
 
-      if (position.includes("bottom")) {
+      if (position.startsWith("bottom")) {
         bottomToast.style.top = "auto";
         bottomToast.style.bottom = bottomToastPosition;
       } else {
@@ -169,7 +171,8 @@
       bottomToast.style.transform = "translateY(0px)";
     } else {
       bottomToast.style.scale = "88%";
-      if (position.includes("bottom")) {
+
+      if (position.startsWith("bottom")) {
         bottomToast.style.transform = "translateY(-32px)";
       } else {
         alignBottom(topToast, bottomToast);
@@ -195,7 +198,7 @@
         paddingBetweenToasts +
         "px";
 
-      if (position.includes("bottom")) {
+      if (position.startsWith("bottom")) {
         burnToast.style.top = "auto";
         burnToast.style.bottom = burnToastPosition;
       } else {
@@ -217,7 +220,7 @@
 
     toasts.pop();
 
-    if (position.includes("bottom")) {
+    if (position.startsWith("bottom")) {
       middleToast.style.top = "auto";
     }
 
@@ -433,7 +436,11 @@
 >
   {#each toasts as toast (toast.id)}
     <li
-      in:fly={{ y: -200, duration: 300, opacity: 100 }}
+      in:fly={{
+        y: position.startsWith("bottom") ? 200 : -200,
+        duration: 300,
+        opacity: 100,
+      }}
       out:fly={{ y: -50, duration: 300, delay: 300, opacity: 0 }}
       id={toast.id}
       class={{
