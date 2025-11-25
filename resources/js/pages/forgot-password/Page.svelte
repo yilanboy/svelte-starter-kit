@@ -7,6 +7,8 @@
   import ChevronLeft from "@/components/icons/ChevronLeft.svelte";
   import { back } from "@/helpers";
   import InputWithLabel from "@/components/forms/InputWithLabel.svelte";
+  import { onMount } from "svelte";
+  import Toasts from "@/components/Toasts.svelte";
 
   let title = "Forgot Password";
 
@@ -15,6 +17,36 @@
       email: string;
     };
   }
+
+  $effect(() => {
+    if ($page.props.flash.success) {
+      window.dispatchEvent(
+        new CustomEvent("toast-show", {
+          detail: {
+            type: "success",
+            message: "Nice",
+            description: "Password reset link sent!",
+            position: "top-right",
+            html: "",
+          },
+        }),
+      );
+    }
+
+    if ($page.props.flash.error) {
+      window.dispatchEvent(
+        new CustomEvent("toast-show", {
+          detail: {
+            type: "danger",
+            message: "Oops",
+            description: "Too many attempts. Please try again later.",
+            position: "top-right",
+            html: "",
+          },
+        }),
+      );
+    }
+  });
 </script>
 
 <svelte:head>
@@ -24,41 +56,7 @@
 <div
   class="font-source-sans-3 relative flex min-h-screen w-full flex-col bg-zinc-50"
 >
-  {#if $page.props.flash.success}
-    <div
-      transition:fly={{ y: -100 }}
-      class="absolute top-4 right-1/2 left-1/2 -translate-x-1/2 rounded-md bg-green-50 p-4 sm:w-full sm:max-w-sm"
-    >
-      <div class="flex items-center">
-        <div class="shrink-0">
-          <CircleCheck className="size-5 text-green-400" />
-        </div>
-        <div class="ml-3">
-          <p class="text-base font-medium text-green-700">
-            {$page.props.flash.success}
-          </p>
-        </div>
-      </div>
-    </div>
-  {/if}
-
-  {#if $page.props.flash.error}
-    <div
-      transition:fly={{ y: -100 }}
-      class="absolute top-4 right-1/2 left-1/2 -translate-x-1/2 rounded-md bg-red-50 p-4 sm:w-full sm:max-w-sm"
-    >
-      <div class="flex items-center">
-        <div class="shrink-0">
-          <CircleX className="size-5 text-red-400" />
-        </div>
-        <div class="ml-3">
-          <p class="text-base font-medium text-red-700">
-            {$page.props.flash.error}
-          </p>
-        </div>
-      </div>
-    </div>
-  {/if}
+  <Toasts />
 
   <header class="flex w-full items-center justify-start p-4">
     <button
