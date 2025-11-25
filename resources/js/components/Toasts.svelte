@@ -2,6 +2,10 @@
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
   import X from "@/components/icons/X.svelte";
+  import CircleCheck from "@/components/icons/CircleCheck.svelte";
+  import Info from "@/components/icons/Info.svelte";
+  import TriangleAlert from "@/components/icons/TriangleAlert.svelte";
+  import CircleAlert from "@/components/icons/CircleAlert.svelte";
 
   interface ToastProps {
     id: string;
@@ -9,7 +13,7 @@
     message: string;
     description?: string;
     type?: "success" | "error" | "warning" | "info" | "danger" | "default";
-    html?: boolean;
+    html?: "";
   }
 
   type ToastsLayout = "default" | "expanded";
@@ -50,7 +54,6 @@
   }
 
   function burnToast(id: string) {
-    console.log("burnToast is triggered");
     let burnToast = getToastWithId(id);
 
     if (!burnToast) return;
@@ -73,6 +76,7 @@
 
         burnToastElement.classList.add("-translate-y-full");
       }
+
       burnToastElement.classList.add("opacity-0");
 
       setTimeout(function () {
@@ -99,7 +103,6 @@
     if (toasts.length == 0) return;
 
     let topToast = document.getElementById(toasts[0].id);
-
     if (!topToast) return;
 
     topToast.style.zIndex = (100).toString();
@@ -115,8 +118,8 @@
     }
 
     if (toasts.length == 1) return;
-    let middleToast = document.getElementById(toasts[1].id);
 
+    let middleToast = document.getElementById(toasts[1].id);
     if (!middleToast) return;
 
     middleToast.style.zIndex = (90).toString();
@@ -133,13 +136,13 @@
       }
 
       middleToast.style.scale = "100%";
-      middleToast.style.transform = "translateY(0px)";
+      middleToast.style.transform = "translateY(0)";
     } else {
       middleToast.style.scale = "94%";
+
       if (position.includes("bottom")) {
         middleToast.style.transform = "translateY(-16px)";
       } else {
-        alignBottom(topToast, middleToast);
         middleToast.style.transform = "translateY(16px)";
       }
     }
@@ -147,7 +150,6 @@
     if (toasts.length == 2) return;
 
     let bottomToast = document.getElementById(toasts[2].id);
-
     if (!bottomToast) return;
 
     bottomToast.style.zIndex = (80).toString();
@@ -168,14 +170,13 @@
       }
 
       bottomToast.style.scale = "100%";
-      bottomToast.style.transform = "translateY(0px)";
+      bottomToast.style.transform = "translateY(0)";
     } else {
       bottomToast.style.scale = "88%";
 
       if (position.startsWith("bottom")) {
         bottomToast.style.transform = "translateY(-32px)";
       } else {
-        alignBottom(topToast, bottomToast);
         bottomToast.style.transform = "translateY(32px)";
       }
     }
@@ -206,11 +207,10 @@
       }
 
       burnToast.style.scale = "100%";
-      burnToast.style.transform = "translateY(0px)";
+      burnToast.style.transform = "translateY(0)";
     } else {
       burnToast.style.scale = "82%";
-      alignBottom(topToast, burnToast);
-      // burnToast.style.transform = "translateY(48px)";
+      burnToast.style.transform = "translateY(48px)";
     }
 
     if (!burnToast.firstElementChild) return;
@@ -227,21 +227,7 @@
     return;
   }
 
-  function alignBottom(element1: HTMLElement, element2: HTMLElement) {
-    // Get the top position and height of the first element
-    let top1 = element1.offsetTop;
-    let height1 = element1.offsetHeight;
-
-    // Get the height of the second element
-    let height2 = element2.offsetHeight;
-
-    // Calculate the top position for the second element
-    let top2 = top1 + (height1 - height2);
-
-    // Apply the calculated top position to the second element
-    element2.style.top = top2 + "px";
-  }
-
+  // Reset bottom when mouse hovers toasts container
   function resetBottom() {
     for (let i = 0; i < toasts.length; i++) {
       if (document.getElementById(toasts[i].id)) {
@@ -252,12 +238,13 @@
     }
   }
 
+  // Reset top when mouse hovers toasts container
   function resetTop() {
     for (let i = 0; i < toasts.length; i++) {
       if (document.getElementById(toasts[i].id)) {
         let toastElement = document.getElementById(toasts[i].id);
         if (!toastElement) return;
-        toastElement.style.top = "0px";
+        toastElement.style.top = "0";
       }
     }
   }
@@ -303,14 +290,14 @@
     }
   }
 
-  // 調整 toasts 的顯示方式，預設為折疊，可以改為展開
+  // Change toasts layout to expanded or default
   function onSetToastsLayout(event: CustomEvent) {
     layout = event.detail.layout;
     expanded = layout === "expanded";
     stackToasts();
   }
 
-  // 開始顯示 toasts，新增一個 toast 在 toasts 列表
+  // Start to show toasts, add a toast to toasts
   function onToastShow(event: CustomEvent) {
     event.stopPropagation();
 
@@ -329,13 +316,12 @@
 
     toasts.unshift(toast);
 
-    // burn toast after 3 seconds
+    // delete the toast after 6 seconds
     setTimeout(function () {
       deleteToastWithId(toast.id);
-    }, 3000);
+    }, 6000);
   }
 
-  // 觸發 onToastShow 事件，新增一個 toast
   function popToast(
     message = "hello",
     options = {
@@ -399,7 +385,7 @@
     stackToasts();
   }
 
-  // When new toast is added, stack toasts
+  // When the toast is added or removed, stack toasts
   $effect(() => {
     if (toasts.length > 0) {
       stackToasts();
@@ -469,15 +455,24 @@
                 "flex items-center": true,
               }}
             >
-              <p class="text-[13px] leading-none font-medium text-gray-800">
+              {#if toast.type === "success"}
+                <CircleCheck className="size-4 mr-2 -ml-1" />
+              {:else if toast.type === "info"}
+                <Info className="size-4 mr-2 -ml-1" />
+              {:else if toast.type === "warning"}
+                <TriangleAlert className="size-4 mr-2 -ml-1" />
+              {:else if toast.type === "danger"}
+                <CircleAlert className="size-4 mr-2 -ml-1" />
+              {/if}
+              <p class="text-base leading-none font-medium text-gray-800">
                 {toast.message}
               </p>
             </div>
             {#if toast.description}
               <p
                 class={{
-                  "pl-5": toast.type !== "default",
-                  "mt-1.5 text-xs leading-none opacity-70": true,
+                  "pl-5.5": toast.type !== "default",
+                  "mt-1.5 text-sm leading-none opacity-70": true,
                 }}
               >
                 {toast.description}
@@ -504,59 +499,3 @@
     </li>
   {/each}
 </ul>
-
-<div class="flex w-full justify-center gap-2 p-2">
-  <button
-    title="top right"
-    type="button"
-    class="cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-    onclick={() => {
-      popToast("none", {
-        description: "",
-        type: "default",
-        position: "top-right",
-        html: '<p class="p-4">Hello world!</p>',
-      });
-    }}>Top Right</button
-  >
-
-  <button
-    title="bottom left"
-    type="button"
-    class="cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-    onclick={() => {
-      popToast("none", {
-        description: "",
-        type: "default",
-        position: "bottom-left",
-        html: '<p class="p-4">Hello world!</p>',
-      });
-    }}>Bottom Left</button
-  >
-
-  <button
-    title="default"
-    type="button"
-    class="cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-    onclick={() => {
-      expanded = false;
-      window.dispatchEvent(
-        new CustomEvent("set-toasts-layout", { detail: { layout: "default" } }),
-      );
-    }}>Default</button
-  >
-
-  <button
-    title="expanded"
-    type="button"
-    class="cursor-pointer rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-    onclick={() => {
-      expanded = true;
-      window.dispatchEvent(
-        new CustomEvent("set-toasts-layout", {
-          detail: { layout: "expanded" },
-        }),
-      );
-    }}>Expanded</button
-  >
-</div>
