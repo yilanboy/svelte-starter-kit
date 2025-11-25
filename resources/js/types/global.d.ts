@@ -7,7 +7,7 @@ declare module "@inertiajs/core" {
 
 declare module "svelte/elements" {
     export interface DOMAttributes {
-        "ontoast-show"?: (event: CustomEvent) => void;
+        "onshow-toast"?: (event: CustomEvent) => void;
         "onset-toasts-layout"?: (event: CustomEvent) => void;
     }
 }

@@ -9,10 +9,9 @@
 
   interface ToastProps {
     id: string;
-    show: boolean;
-    message: string;
-    description?: string;
     type?: "success" | "error" | "warning" | "info" | "danger" | "default";
+    message?: string;
+    description?: string;
     html?: "";
   }
 
@@ -88,7 +87,6 @@
     }
   }
 
-  // 初始化 toasts 與每次有 toast 新增時都會觸發
   function stackToasts() {
     positionToasts();
     calculateHeightOfToastsContainer();
@@ -251,7 +249,7 @@
 
   function calculateHeightOfToastsContainer() {
     if (toasts.length == 0) {
-      toastsContainer.style.height = "0px";
+      toastsContainer.style.height = "0";
 
       return;
     }
@@ -298,7 +296,7 @@
   }
 
   // Start to show toasts, add a toast to toasts
-  function onToastShow(event: CustomEvent) {
+  function onShowToast(event: CustomEvent) {
     event.stopPropagation();
 
     if (event.detail.position) {
@@ -307,10 +305,9 @@
 
     let toast = {
       id: "toast-" + crypto.randomUUID(),
-      show: false,
+      type: event.detail.type,
       message: event.detail.message,
       description: event.detail.description,
-      type: event.detail.type,
       html: event.detail.html,
     };
 
@@ -320,39 +317,6 @@
     setTimeout(function () {
       deleteToastWithId(toast.id);
     }, 6000);
-  }
-
-  function popToast(
-    message = "hello",
-    options = {
-      description: "",
-      type: "default",
-      position: "top-right",
-      html: '<p class="p-4">Hello world!</p>',
-    },
-  ) {
-    let description = "";
-    let type = "default";
-    let position = "top-center";
-    let html = "";
-
-    if (typeof options.description != "undefined")
-      description = options.description;
-    if (typeof options.type != "undefined") type = options.type;
-    if (typeof options.position != "undefined") position = options.position;
-    if (typeof options.html != "undefined") html = options.html;
-
-    window.dispatchEvent(
-      new CustomEvent("toast-show", {
-        detail: {
-          type: type,
-          message: message,
-          description: description,
-          position: position,
-          html: html,
-        },
-      }),
-    );
   }
 
   function onMouseEnterToastsContainer() {
@@ -403,7 +367,7 @@
 
 <svelte:window
   onset-toasts-layout={onSetToastsLayout}
-  ontoast-show={onToastShow}
+  onshow-toast={onShowToast}
 />
 
 <ul
@@ -423,7 +387,7 @@
   {#each toasts as toast (toast.id)}
     <li
       in:fly={{
-        y: position.startsWith("bottom") ? 200 : -200,
+        y: position.startsWith("bottom") ? 50 : -50,
         duration: 300,
         opacity: 100,
       }}
@@ -468,6 +432,7 @@
                 {toast.message}
               </p>
             </div>
+
             {#if toast.description}
               <p
                 class={{
@@ -493,7 +458,7 @@
             "absolute right-0 mr-2.5 cursor-pointer rounded-full p-1.5 text-gray-400 opacity-0 transition duration-100 ease-in-out group-hover:opacity-100 hover:bg-gray-50 hover:text-gray-500": true,
           }}
         >
-          <X className="size-3" />
+          <X className="size-4" />
         </button>
       </span>
     </li>

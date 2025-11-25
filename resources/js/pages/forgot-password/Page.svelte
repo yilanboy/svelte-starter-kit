@@ -21,7 +21,7 @@
   $effect(() => {
     if ($page.props.flash.success) {
       window.dispatchEvent(
-        new CustomEvent("toast-show", {
+        new CustomEvent("show-toast", {
           detail: {
             type: "success",
             message: "Nice",
@@ -35,7 +35,7 @@
 
     if ($page.props.flash.error) {
       window.dispatchEvent(
-        new CustomEvent("toast-show", {
+        new CustomEvent("show-toast", {
           detail: {
             type: "danger",
             message: "Oops",
