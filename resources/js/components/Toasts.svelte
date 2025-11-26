@@ -12,7 +12,7 @@
     type?: "success" | "error" | "warning" | "info" | "danger" | "default";
     message?: string;
     description?: string;
-    html?: "";
+    html?: string;
   }
 
   type ToastsLayout = "default" | "expanded";
@@ -60,9 +60,7 @@
     setTimeout(function () {
       deleteToastWithId(id);
 
-      requestAnimationFrame(() => {
-        stackToasts();
-      });
+      requestAnimationFrame(stackToasts);
     }, 300);
   }
 
@@ -117,7 +115,7 @@
     } else {
       middleToast.style.scale = "94%";
 
-      if (position.includes("bottom")) {
+      if (position.startsWith("bottom")) {
         middleToast.style.transform = "translateY(-16px)";
       } else {
         middleToast.style.transform = "translateY(16px)";
@@ -206,7 +204,7 @@
     for (let i = 0; i < toasts.length; i++) {
       if (document.getElementById(toasts[i].id)) {
         let toastElement = document.getElementById(toasts[i].id);
-        if (!toastElement) return;
+        if (!toastElement) continue;
         toastElement.style.bottom = "0";
       }
     }
@@ -217,7 +215,7 @@
     for (let i = 0; i < toasts.length; i++) {
       if (document.getElementById(toasts[i].id)) {
         let toastElement = document.getElementById(toasts[i].id);
-        if (!toastElement) return;
+        if (!toastElement) continue;
         toastElement.style.top = "0";
       }
     }
@@ -246,7 +244,7 @@
     let firstToastRectangle = firstToastElement.getBoundingClientRect();
 
     if (toastsHovered) {
-      if (position.includes("bottom")) {
+      if (position.startsWith("bottom")) {
         toastsContainer.style.height =
           firstToastRectangle.top +
           firstToastRectangle.height -
@@ -289,9 +287,7 @@
 
     toasts.unshift(toast);
 
-    requestAnimationFrame(() => {
-      stackToasts();
-    });
+    requestAnimationFrame(stackToasts);
 
     // delete the toast after 6 seconds
     setTimeout(function () {
@@ -304,7 +300,7 @@
 
     if (layout !== "default") return;
 
-    if (position.includes("bottom")) {
+    if (position.startsWith("bottom")) {
       resetBottom();
     } else {
       resetTop();
@@ -319,7 +315,7 @@
 
     if (layout !== "default") return;
 
-    if (position.includes("bottom")) {
+    if (position.startsWith("bottom")) {
       resetBottom();
     } else {
       resetTop();
@@ -362,7 +358,7 @@
       in:fly={{
         y: position.startsWith("bottom") ? 50 : -50,
         duration: 300,
-        opacity: 100,
+        opacity: 1,
       }}
       out:fly={{ y: -50, duration: 300, delay: 300, opacity: 0 }}
       id={toast.id}
@@ -420,7 +416,7 @@
         {/if}
 
         <button
-          title="burn-toast"
+          aria-label="Dismiss notification"
           type="button"
           onclick={() => {
             burnToast(toast.id);
