@@ -44,47 +44,26 @@
     }
   }
 
-  function getToastWithId(id: string) {
-    for (let i = 0; i < toasts.length; i++) {
-      if (toasts[i].id === id) {
-        return toasts[i];
-      }
-    }
-  }
-
   function burnToast(id: string) {
-    let burnToast = getToastWithId(id);
+    let burnToastElement = document.getElementById(id);
 
-    if (!burnToast) return;
+    if (!burnToastElement) return;
 
-    let burnToastElement = document.getElementById(burnToast.id);
-
-    if (burnToastElement) {
-      if (toasts.length == 1) {
-        if (layout == "default") {
-          expanded = false;
-        }
-
-        burnToastElement.classList.remove("translate-y-0");
-
-        if (position.includes("bottom")) {
-          burnToastElement.classList.add("translate-y-full");
-        } else {
-          burnToastElement.classList.add("-translate-y-full");
-        }
-
-        burnToastElement.classList.add("-translate-y-full");
+    if (toasts.length == 1) {
+      if (layout == "default") {
+        expanded = false;
       }
-
-      burnToastElement.classList.add("opacity-0");
-
-      setTimeout(function () {
-        deleteToastWithId(id);
-        setTimeout(function () {
-          stackToasts();
-        }, 1);
-      }, 300);
     }
+
+    burnToastElement.style.opacity = "0";
+
+    setTimeout(function () {
+      deleteToastWithId(id);
+
+      requestAnimationFrame(() => {
+        stackToasts();
+      });
+    }, 300);
   }
 
   function stackToasts() {
@@ -211,10 +190,7 @@
       burnToast.style.transform = "translateY(48px)";
     }
 
-    if (!burnToast.firstElementChild) return;
-
-    burnToast.firstElementChild.classList.remove("opacity-100");
-    burnToast.firstElementChild.classList.add("opacity-0");
+    burnToast.style.opacity = "0";
 
     toasts.pop();
 
@@ -313,6 +289,10 @@
 
     toasts.unshift(toast);
 
+    requestAnimationFrame(() => {
+      stackToasts();
+    });
+
     // delete the toast after 6 seconds
     setTimeout(function () {
       deleteToastWithId(toast.id);
@@ -348,13 +328,6 @@
     expanded = false;
     stackToasts();
   }
-
-  // When the toast is added or removed, stack toasts
-  $effect(() => {
-    if (toasts.length > 0) {
-      stackToasts();
-    }
-  });
 
   onMount(() => {
     if (layout == "expanded") {
