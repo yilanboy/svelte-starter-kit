@@ -7,16 +7,6 @@
   import TriangleAlert from "@/components/icons/TriangleAlert.svelte";
   import CircleAlert from "@/components/icons/CircleAlert.svelte";
 
-  interface ToastProps {
-    id: string;
-    type?: "success" | "error" | "warning" | "info" | "danger" | "default";
-    message?: string;
-    description?: string;
-    html?: string;
-  }
-
-  type ToastsLayout = "default" | "expanded";
-
   type ToastsPosition =
     | "top-right"
     | "top-left"
@@ -25,16 +15,46 @@
     | "bottom-left"
     | "bottom-center";
 
+  type ToastsLayout = "default" | "expanded";
+
+  interface ToastProps {
+    id: string;
+    type?: "success" | "error" | "warning" | "info" | "danger" | "default";
+    message?: string;
+    description?: string;
+    html?: string;
+  }
+
+  let position: ToastsPosition = $state("top-center");
+  let layout: ToastsLayout = $state("default");
+  let paddingBetweenToasts = $state(16);
   let toasts: ToastProps[] = $state([]);
   let toastsHovered = $state(false);
   let expanded = $state(false);
-  let layout: ToastsLayout = $state("default");
-  let position: ToastsPosition = $state("top-center");
-  let paddingBetweenToasts = $state(15);
-
   let toastsContainer: HTMLUListElement;
 
+  // Hover-to-pause: timer management
+  const AUTO_DISMISS_MS = 6000;
+
+  interface ToastTimer {
+    timeoutId: number; // -1 when paused/not scheduled
+    start: number; // timestamp when the current timeout was (re)started
+    remaining: number; // ms remaining until auto-dismiss
+  }
+
+  const toastTimers = new Map<string, ToastTimer>();
+
   function deleteToastWithId(id: string) {
+    // Clear any outstanding timer for this toast
+    const timer = toastTimers.get(id);
+
+    if (timer) {
+      if (timer.timeoutId >= 0) {
+        clearTimeout(timer.timeoutId);
+      }
+      toastTimers.delete(id);
+    }
+
     for (let i = 0; i < toasts.length; i++) {
       if (toasts[i].id === id) {
         toasts.splice(i, 1);
@@ -58,10 +78,88 @@
     burnToastElement.style.opacity = "0";
 
     setTimeout(function () {
+      // Ensure the timer is cleared when manually dismissed
+      const timer = toastTimers.get(id);
+      if (timer) {
+        if (timer.timeoutId >= 0) {
+          clearTimeout(timer.timeoutId);
+        }
+        toastTimers.delete(id);
+      }
       deleteToastWithId(id);
 
       requestAnimationFrame(stackToasts);
     }, 300);
+  }
+
+  // Schedule auto-dismiss for a toast
+  function scheduleAutoDismiss(id: string, duration: number) {
+    // Clear any existing timer first
+    const existing = toastTimers.get(id);
+    if (existing && existing.timeoutId >= 0) {
+      clearTimeout(existing.timeoutId);
+    }
+
+    const start = Date.now();
+    const timeoutId = window.setTimeout(
+      () => {
+        toastTimers.delete(id);
+        deleteToastWithId(id);
+      },
+      Math.max(0, duration),
+    );
+
+    toastTimers.set(id, { timeoutId, start, remaining: Math.max(0, duration) });
+  }
+
+  // Pause all toasts (clear timeouts and capture remaining time)
+  function pauseAllToasts() {
+    const now = Date.now();
+    for (let i = 0; i < toasts.length; i++) {
+      const id = toasts[i].id;
+      const t = toastTimers.get(id);
+      if (!t) {
+        // If no timer (e.g., just added while already hovered), initializes paused state
+        toastTimers.set(id, {
+          timeoutId: -1,
+          start: now,
+          remaining: AUTO_DISMISS_MS,
+        });
+        continue;
+      }
+      const elapsed = Math.max(0, now - t.start);
+      const remaining = Math.max(0, t.remaining - elapsed);
+      if (t.timeoutId >= 0) {
+        clearTimeout(t.timeoutId);
+      }
+      toastTimers.set(id, { timeoutId: -1, start: now, remaining });
+    }
+  }
+
+  // Resume all toasts with their remaining time
+  function resumeAllToasts() {
+    const now = Date.now();
+    for (let i = 0; i < toasts.length; i++) {
+      const id = toasts[i].id;
+      const t = toastTimers.get(id);
+      if (!t) {
+        // If somehow missing, start a fresh countdown
+        scheduleAutoDismiss(id, AUTO_DISMISS_MS);
+        continue;
+      }
+      if (t.remaining <= 0) {
+        // Time already elapsed while paused; remove immediately
+        toastTimers.delete(id);
+        deleteToastWithId(id);
+        continue;
+      }
+      // Schedule with remaining time
+      const timeoutId = window.setTimeout(() => {
+        toastTimers.delete(id);
+        deleteToastWithId(id);
+      }, t.remaining);
+      toastTimers.set(id, { timeoutId, start: now, remaining: t.remaining });
+    }
   }
 
   function stackToasts() {
@@ -156,7 +254,7 @@
       }
     }
 
-    if (toasts.length == 3) return;
+    if (toasts.length === 3) return;
 
     let burnToast = document.getElementById(toasts[3].id);
 
@@ -188,13 +286,7 @@
       burnToast.style.transform = "translateY(48px)";
     }
 
-    burnToast.style.opacity = "0";
-
     toasts.pop();
-
-    if (position.startsWith("bottom")) {
-      middleToast.style.top = "auto";
-    }
 
     return;
   }
@@ -289,14 +381,24 @@
 
     requestAnimationFrame(stackToasts);
 
-    // delete the toast after 6 seconds
-    setTimeout(function () {
-      deleteToastWithId(toast.id);
-    }, 6000);
+    // Auto-dismiss handling with hover-to-pause support
+    if (toastsHovered) {
+      // Initialize the paused timer state; will start on mouse leave
+      toastTimers.set(toast.id, {
+        timeoutId: -1,
+        start: Date.now(),
+        remaining: AUTO_DISMISS_MS,
+      });
+    } else {
+      scheduleAutoDismiss(toast.id, AUTO_DISMISS_MS);
+    }
   }
 
   function onMouseEnterToastsContainer() {
     toastsHovered = true;
+
+    // Pause countdowns while hovered
+    pauseAllToasts();
 
     if (layout !== "default") return;
 
@@ -313,6 +415,9 @@
   function onMouseLeaveToastsContainer() {
     toastsHovered = false;
 
+    // Resume countdowns after hover ends
+    resumeAllToasts();
+
     if (layout !== "default") return;
 
     if (position.startsWith("bottom")) {
@@ -323,6 +428,31 @@
 
     expanded = false;
     stackToasts();
+  }
+
+  function toastFlyInY(): number {
+    if (position.startsWith("bottom")) {
+      return 50;
+    }
+
+    return -50;
+  }
+
+  function toastFlyOutY(): number {
+    // y 如果是正整數，代表由下往上，負數代表由上往下
+    if (position.startsWith("bottom")) {
+      if (expanded) {
+        return -50;
+      }
+
+      return 50;
+    }
+
+    if (expanded) {
+      return 50;
+    }
+
+    return -50;
   }
 
   onMount(() => {
@@ -356,11 +486,15 @@
   {#each toasts as toast (toast.id)}
     <li
       in:fly={{
-        y: position.startsWith("bottom") ? 50 : -50,
+        y: toastFlyInY(),
         duration: 300,
         opacity: 1,
       }}
-      out:fly={{ y: -50, duration: 300, delay: 300, opacity: 0 }}
+      out:fly={{
+        y: toastFlyOutY(),
+        duration: 300,
+        opacity: 0,
+      }}
       id={toast.id}
       class={{
         "toast-no-description": !toast.description,
