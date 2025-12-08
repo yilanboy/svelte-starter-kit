@@ -5,6 +5,7 @@
   import ChevronLeft from "@/components/icons/ChevronLeft.svelte";
   import { back } from "@/helpers";
   import InputWithLabel from "@/components/forms/InputWithLabel.svelte";
+  import LayoutGuest from "@/components/layouts/guest/LayoutGuest.svelte";
 
   let title = "Register";
 
@@ -15,13 +16,27 @@
       password: string;
     };
   }
+
+  function handleSuccess() {
+    window.dispatchEvent(
+      new CustomEvent("show-toast", {
+        detail: {
+          type: "success",
+          message: "Account created",
+          description: "You're all set — welcome aboard!",
+          position: "top-right",
+          html: "",
+        },
+      }),
+    );
+  }
 </script>
 
 <svelte:head>
   <title>{title}</title>
 </svelte:head>
 
-<div class="font-source-sans-3 flex min-h-screen w-full flex-col bg-zinc-50">
+<LayoutGuest>
   <header class="flex w-full items-center justify-start p-4">
     <button
       type="button"
@@ -39,7 +54,12 @@
     </h2>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <Form class="space-y-6" method="post" action={RegisterController.store()}>
+      <Form
+        class="space-y-6"
+        method="post"
+        action={RegisterController.store()}
+        onSuccess={handleSuccess}
+      >
         {#snippet children({ errors }: SlotProps)}
           <InputWithLabel label="Name" id="name" name="name" required />
 
@@ -102,4 +122,4 @@
       </p>
     </div>
   </main>
-</div>
+</LayoutGuest>

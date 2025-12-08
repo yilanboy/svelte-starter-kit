@@ -1,7 +1,6 @@
 <script lang="ts">
   import { page, router } from "@inertiajs/svelte";
-  import { fly } from "svelte/transition";
-  import CircleCheck from "@/components/icons/CircleCheck.svelte";
+  import LayoutGuest from "@/components/layouts/guest/LayoutGuest.svelte";
 
   let title = "Verify Email";
 
@@ -33,33 +32,29 @@
       onSuccess: () => startCountdown(),
     });
   }
+
+  $effect(() => {
+    if ($page.props.flash.success) {
+      window.dispatchEvent(
+        new CustomEvent("show-toast", {
+          detail: {
+            type: "success",
+            message: "Verification email sent",
+            description: $page.props.flash.success,
+            position: "top-right",
+            html: "",
+          },
+        }),
+      );
+    }
+  });
 </script>
 
 <svelte:head>
   <title>{title}</title>
 </svelte:head>
 
-<div
-  class="font-source-sans-3 relative flex min-h-screen w-full flex-col bg-zinc-50"
->
-  {#if $page.props.flash.success && showCountdown}
-    <div
-      transition:fly={{ y: -100 }}
-      class="absolute top-4 right-1/2 left-1/2 -translate-x-1/2 rounded-md bg-green-50 p-4 sm:w-full sm:max-w-sm"
-    >
-      <div class="flex items-center">
-        <div class="shrink-0">
-          <CircleCheck className="size-5 text-green-400" />
-        </div>
-        <div class="ml-3">
-          <p class="text-base font-medium text-green-700">
-            {$page.props.flash.success}
-          </p>
-        </div>
-      </div>
-    </div>
-  {/if}
-
+<LayoutGuest>
   <main class="flex w-full grow flex-col items-center justify-center gap-6 p-6">
     <div class="px-4 py-5 sm:p-6">
       <h2 class="text-2xl font-semibold text-zinc-900">
@@ -85,4 +80,4 @@
       </div>
     </div>
   </main>
-</div>
+</LayoutGuest>

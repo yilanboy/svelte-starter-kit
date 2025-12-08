@@ -1,14 +1,10 @@
 <script lang="ts">
   import ForgotPasswordController from "@/actions/App/Http/Controllers/Auth/ForgotPasswordController";
   import { Form, page } from "@inertiajs/svelte";
-  import CircleCheck from "@/components/icons/CircleCheck.svelte";
-  import { fly } from "svelte/transition";
-  import CircleX from "@/components/icons/CircleX.svelte";
   import ChevronLeft from "@/components/icons/ChevronLeft.svelte";
   import { back } from "@/helpers";
   import InputWithLabel from "@/components/forms/InputWithLabel.svelte";
-  import { onMount } from "svelte";
-  import Toasts from "@/components/Toasts.svelte";
+  import LayoutGuest from "@/components/layouts/guest/LayoutGuest.svelte";
 
   let title = "Forgot Password";
 
@@ -24,8 +20,8 @@
         new CustomEvent("show-toast", {
           detail: {
             type: "success",
-            message: "Nice",
-            description: "Password reset link sent!",
+            message: "Reset link sent",
+            description: $page.props.flash.success,
             position: "top-right",
             html: "",
           },
@@ -38,8 +34,8 @@
         new CustomEvent("show-toast", {
           detail: {
             type: "danger",
-            message: "Oops",
-            description: "Too many attempts. Please try again later.",
+            message: "Too many attempts",
+            description: $page.props.flash.error,
             position: "top-right",
             html: "",
           },
@@ -53,11 +49,7 @@
   <title>{title}</title>
 </svelte:head>
 
-<div
-  class="font-source-sans-3 relative flex min-h-screen w-full flex-col bg-zinc-50"
->
-  <Toasts />
-
+<LayoutGuest>
   <header class="flex w-full items-center justify-start p-4">
     <button
       type="button"
@@ -105,4 +97,4 @@
       </Form>
     </div>
   </main>
-</div>
+</LayoutGuest>

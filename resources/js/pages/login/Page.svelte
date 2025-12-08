@@ -8,12 +8,27 @@
   import { Form } from "@inertiajs/svelte";
   import InputWithLabel from "@/components/forms/InputWithLabel.svelte";
   import CheckboxWithLabel from "@/components/forms/CheckboxWithLabel.svelte";
+  import LayoutGuest from "@/components/layouts/guest/LayoutGuest.svelte";
 
   interface SlotProps {
     errors: {
       email: string;
       password: string;
     };
+  }
+
+  function handleSuccess() {
+    window.dispatchEvent(
+      new CustomEvent("show-toast", {
+        detail: {
+          type: "success",
+          message: "Welcome back",
+          description: "Signed in successfully",
+          position: "top-right",
+          html: "",
+        },
+      }),
+    );
   }
 
   let title = "Login";
@@ -23,7 +38,7 @@
   <title>{title}</title>
 </svelte:head>
 
-<div class="font-source-sans-3 flex min-h-screen w-full flex-col bg-zinc-50">
+<LayoutGuest>
   <header class="flex w-full items-center justify-start p-4">
     <button
       type="button"
@@ -45,6 +60,7 @@
         class="space-y-6"
         method="post"
         action={AuthenticatedSessionController.store()}
+        onSuccess={handleSuccess}
       >
         {#snippet children({ errors }: SlotProps)}
           <InputWithLabel
@@ -114,4 +130,4 @@
       </p>
     </div>
   </main>
-</div>
+</LayoutGuest>

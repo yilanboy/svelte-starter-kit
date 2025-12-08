@@ -5,6 +5,7 @@
   import X from "@/components/icons/X.svelte";
   import Menu from "@/components/icons/Menu.svelte";
   import { Link } from "@inertiajs/svelte";
+  import LayoutGuest from "@/components/layouts/guest/LayoutGuest.svelte";
 
   interface Props {
     title: string;
@@ -17,7 +18,7 @@
   <title>{title}</title>
 </svelte:head>
 
-<div class="bg-white">
+<LayoutGuest>
   <header class="absolute inset-x-0 top-0 z-50">
     <nav
       aria-label="Global"
@@ -148,4 +149,4 @@
       </div>
     </div>
   </div>
-</div>
+</LayoutGuest>
