@@ -128,7 +128,7 @@
         >
           A minimal, modern starter kit built with Laravel and Svelte.
         </p>
-        <p class=" text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
+        <p class="text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
           Perfect for your next project.
         </p>
         <div class="mt-10 flex items-center justify-center gap-x-6">

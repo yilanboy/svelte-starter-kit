@@ -23,7 +23,6 @@
             message: "Reset link sent",
             description: $page.props.flash.success,
             position: "top-right",
-            html: "",
           },
         }),
       );
@@ -37,7 +36,6 @@
             message: "Too many attempts",
             description: $page.props.flash.error,
             position: "top-right",
-            html: "",
           },
         }),
       );

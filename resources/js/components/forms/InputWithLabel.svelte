@@ -6,12 +6,7 @@
     id: string;
   }
 
-  let {
-    label,
-    id,
-    type = "text",
-    ...rest
-  }: Props = $props();
+  let { label, id, type = "text", ...rest }: Props = $props();
 </script>
 
 <div>

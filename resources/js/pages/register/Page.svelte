@@ -25,7 +25,6 @@
           message: "Account created",
           description: "You're all set — welcome aboard!",
           position: "top-right",
-          html: "",
         },
       }),
     );

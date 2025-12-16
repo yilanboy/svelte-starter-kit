@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Middleware\InertiaAuthenticateMiddleware;
+use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
     ->name('login')
@@ -13,7 +14,7 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
     ->name('login.store')
-    ->middleware('guest');
+    ->middleware(['guest', HandlePrecognitiveRequests::class]);
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout')

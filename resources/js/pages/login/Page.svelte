@@ -2,19 +2,17 @@
   import AuthenticatedSessionController from "@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController";
   import RegisterController from "@/actions/App/Http/Controllers/Auth/RegisterController";
   import ForgotPasswordController from "@/actions/App/Http/Controllers/Auth/ForgotPasswordController";
-  import { inertia, Link } from "@inertiajs/svelte";
+  import { Form, inertia, Link } from "@inertiajs/svelte";
   import ChevronLeft from "@/components/icons/ChevronLeft.svelte";
   import { back } from "@/helpers";
-  import { Form } from "@inertiajs/svelte";
   import InputWithLabel from "@/components/forms/InputWithLabel.svelte";
-  import CheckboxWithLabel from "@/components/forms/CheckboxWithLabel.svelte";
   import LayoutGuest from "@/components/layouts/guest/LayoutGuest.svelte";
+  import CheckboxWithLabel from "@/components/forms/CheckboxWithLabel.svelte";
 
-  interface SlotProps {
-    errors: {
-      email: string;
-      password: string;
-    };
+  interface FormSlotProps {
+    errors: Record<string, string>;
+    invalid: (field: string) => boolean;
+    validate: (field: string) => void;
   }
 
   function handleSuccess() {
@@ -25,7 +23,6 @@
           message: "Welcome back",
           description: "Signed in successfully",
           position: "top-right",
-          html: "",
         },
       }),
     );
@@ -62,7 +59,7 @@
         action={AuthenticatedSessionController.store()}
         onSuccess={handleSuccess}
       >
-        {#snippet children({ errors }: SlotProps)}
+        {#snippet children({ errors, invalid, validate }: FormSlotProps)}
           <InputWithLabel
             label="Email address"
             type="email"
@@ -70,9 +67,10 @@
             id="email"
             autocomplete="email"
             required
+            onchange={() => validate("email")}
           />
 
-          {#if errors.email}
+          {#if invalid("email")}
             <div class="text-red-500">{errors.email}</div>
           {/if}
 
@@ -83,9 +81,10 @@
             id="password"
             autocomplete="current-password"
             required
+            onchange={() => validate("password")}
           />
 
-          {#if errors.password}
+          {#if invalid("password")}
             <div class="text-red-500">{errors.password}</div>
           {/if}
 

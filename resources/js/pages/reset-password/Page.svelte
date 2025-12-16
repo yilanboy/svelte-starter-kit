@@ -9,12 +9,6 @@
     email: string;
   }
 
-  interface SlotProps {
-    errors: {
-      password: string;
-    };
-  }
-
   let title = "Reset Password";
 
   let { token, email }: Props = $props();
@@ -36,7 +30,7 @@
         method="post"
         action={ResetPasswordController.update()}
       >
-        {#snippet children({ errors }: SlotProps)}
+        {#snippet children({ errors })}
           <input type="hidden" name="token" value={token} />
 
           <input type="hidden" name="email" value={email} />

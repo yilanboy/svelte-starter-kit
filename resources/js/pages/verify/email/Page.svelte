@@ -42,7 +42,6 @@
             message: "Verification email sent",
             description: $page.props.flash.success,
             position: "top-right",
-            html: "",
           },
         }),
       );

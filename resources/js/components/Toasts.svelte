@@ -17,13 +17,30 @@
 
   type ToastsLayout = "default" | "expanded";
 
-  interface ToastProps {
+  type ToastsType =
+    | "success"
+    | "error"
+    | "warning"
+    | "info"
+    | "danger"
+    | "default";
+
+  interface messageToastProps {
     id: string;
-    type?: "success" | "error" | "warning" | "info" | "danger" | "default";
-    message?: string;
-    description?: string;
-    html?: string;
+    type: ToastsType;
+    message: string;
+    description: string;
+    position?: ToastsPosition;
   }
+
+  interface htmlToastProps {
+    id: string;
+    type: ToastsType;
+    html: string;
+    position?: ToastsPosition;
+  }
+
+  type ToastProps = messageToastProps | htmlToastProps;
 
   let position: ToastsPosition = $state("top-center");
   let layout: ToastsLayout = $state("default");
@@ -362,20 +379,34 @@
   }
 
   // Start to show toasts, add a toast to toasts
-  function onShowToast(event: CustomEvent) {
+  function onShowToast(event: CustomEvent<ToastProps>) {
     event.stopPropagation();
 
-    if (event.detail.position) {
-      position = event.detail.position;
+    const detail = event.detail;
+
+    if (detail.position) {
+      position = detail.position;
     }
 
-    let toast = {
-      id: "toast-" + crypto.randomUUID(),
-      type: event.detail.type,
-      message: event.detail.message,
-      description: event.detail.description,
-      html: event.detail.html,
-    };
+    // Narrow the union and construct the correct toast shape
+    let toast: ToastProps;
+
+    if ("html" in detail) {
+      toast = {
+        id: "toast-" + crypto.randomUUID(),
+        type: detail.type,
+        html: detail.html,
+        position: detail.position,
+      } satisfies htmlToastProps;
+    } else {
+      toast = {
+        id: "toast-" + crypto.randomUUID(),
+        type: detail.type,
+        message: detail.message,
+        description: detail.description,
+        position: detail.position,
+      } satisfies messageToastProps;
+    }
 
     toasts.unshift(toast);
 
@@ -523,13 +554,13 @@
               }}
             >
               {#if toast.type === "success"}
-                <CircleCheck className="size-4 mr-2 -ml-1" />
+                <CircleCheck className="mr-2 -ml-1 size-4" />
               {:else if toast.type === "info"}
-                <Info className="size-4 mr-2 -ml-1" />
+                <Info className="mr-2 -ml-1 size-4" />
               {:else if toast.type === "warning"}
-                <TriangleAlert className="size-4 mr-2 -ml-1" />
+                <TriangleAlert className="mr-2 -ml-1 size-4" />
               {:else if toast.type === "danger"}
-                <CircleAlert className="size-4 mr-2 -ml-1" />
+                <CircleAlert className="mr-2 -ml-1 size-4" />
               {/if}
               <p class="text-base leading-none font-medium text-gray-800">
                 {toast.message}
