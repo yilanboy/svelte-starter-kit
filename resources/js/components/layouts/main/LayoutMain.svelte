@@ -13,18 +13,10 @@
   let sidebarIsOpen = $state(false);
   let sidebarTransitionEnabled = $state(false);
 
-  function toggleSidebar() {
-    sidebarIsOpen = !sidebarIsOpen;
-  }
-
-  function closeSidebar() {
-    sidebarIsOpen = false;
-  }
-
   onMount(() => {
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
 
-    // Set initial state based on screen size
+    // Set the initial state based on screen size
     if (mediaQuery.matches) {
       sidebarIsOpen = true;
     }
@@ -37,19 +29,18 @@
 </script>
 
 <div class="font-source-sans-3 relative min-h-screen w-full bg-zinc-50">
-  <Header {toggleSidebar} />
+  <Header bind:sidebarIsOpen />
 
   <Sidebar
-    isOpen={sidebarIsOpen}
+    bind:isOpen={sidebarIsOpen}
     enableTransition={sidebarTransitionEnabled}
-    {closeSidebar}
   />
 
   <div
-    class={[
-      "flex flex-col transition-all duration-300 ease-in-out",
-      sidebarIsOpen ? "lg:pl-72" : "",
-    ]}
+    class={{
+      "lg:pl-72": sidebarIsOpen,
+      "flex flex-col transition-all duration-300 ease-in-out": true,
+    }}
   >
     <main class="flex-1">
       {@render children?.()}

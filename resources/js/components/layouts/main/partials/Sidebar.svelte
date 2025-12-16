@@ -8,10 +8,13 @@
   interface Props {
     isOpen: boolean;
     enableTransition?: boolean;
-    closeSidebar: () => void;
   }
 
-  let { isOpen, enableTransition = false, closeSidebar }: Props = $props();
+  let { isOpen = $bindable(), enableTransition = false }: Props = $props();
+
+  function closeSidebar() {
+    isOpen = false;
+  }
 </script>
 
 <!-- Mobile Sidebar (Off-canvas) -->

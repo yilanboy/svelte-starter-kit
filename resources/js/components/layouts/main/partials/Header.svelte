@@ -1,8 +1,16 @@
 <script lang="ts">
+  import SidebarClose from "@/components/icons/SidebarClose.svelte";
+  import SidebarOpen from "@/components/icons/SidebarOpen.svelte";
+
   interface Props {
-    toggleSidebar: () => void;
+    sidebarIsOpen: boolean;
   }
-  let { toggleSidebar }: Props = $props();
+
+  let { sidebarIsOpen = $bindable() }: Props = $props();
+
+  function toggleSidebar() {
+    sidebarIsOpen = !sidebarIsOpen;
+  }
 </script>
 
 <header class="sticky top-0 z-50 h-16 bg-white shadow">
@@ -17,20 +25,12 @@
         class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 hover:bg-gray-100"
       >
         <span class="sr-only">Toggle Sidebar</span>
-        <svg
-          class="size-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          aria-hidden="true"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-          />
-        </svg>
+
+        {#if sidebarIsOpen}
+          <SidebarClose />
+        {:else}
+          <SidebarOpen />
+        {/if}
       </button>
     </div>
 
