@@ -13,9 +13,9 @@
 </svelte:head>
 
 <LayoutMain>
-  <main class="flex grow py-10">
+  <main class="h-dvh py-10">
     <div
-      class="mx-auto grid max-w-7xl grow grid-cols-3 grid-rows-4 gap-6 px-4 sm:px-6 lg:px-8"
+      class="mx-auto grid h-full w-full max-w-7xl grid-cols-3 grid-rows-4 gap-6 px-4 sm:px-6 lg:px-8"
     >
       <div
         class="col-span-3 flex items-center justify-center rounded-lg border-2 border-dashed border-zinc-300 text-6xl text-zinc-300 lg:col-span-1"
