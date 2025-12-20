@@ -6,6 +6,7 @@
   import Info from "@/components/icons/Info.svelte";
   import TriangleAlert from "@/components/icons/TriangleAlert.svelte";
   import CircleAlert from "@/components/icons/CircleAlert.svelte";
+  import { page, router } from "@inertiajs/svelte";
 
   type ToastsPosition =
     | "top-right"
@@ -17,13 +18,7 @@
 
   type ToastsLayout = "default" | "expanded";
 
-  type ToastsType =
-    | "success"
-    | "error"
-    | "warning"
-    | "info"
-    | "danger"
-    | "default";
+  type ToastsType = "success" | "info" | "warning" | "danger" | "default";
 
   interface messageToastProps {
     id: string;
@@ -492,6 +487,23 @@
     }
 
     stackToasts();
+
+    const listenFlash = router.on("flash", (event) => {
+      if (event.detail.flash.toast) {
+        window.dispatchEvent(
+          new CustomEvent("show-toast", {
+            detail: {
+              ...event.detail.flash.toast,
+              position: "top-right",
+            },
+          }),
+        );
+      }
+    });
+
+    return () => {
+      listenFlash();
+    };
   });
 </script>
 

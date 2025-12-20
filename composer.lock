@@ -1630,16 +1630,16 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "v2.0.15",
+            "version": "v2.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
-                "reference": "e86a3a82c9fca27454f7516b67790445b1001e94"
+                "reference": "c060177e1b5120e70d1c26fe7c1007a8c8238f0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/e86a3a82c9fca27454f7516b67790445b1001e94",
-                "reference": "e86a3a82c9fca27454f7516b67790445b1001e94",
+                "url": "https://api.github.com/repos/inertiajs/inertia-laravel/zipball/c060177e1b5120e70d1c26fe7c1007a8c8238f0d",
+                "reference": "c060177e1b5120e70d1c26fe7c1007a8c8238f0d",
                 "shasum": ""
             },
             "require": {
@@ -1694,9 +1694,9 @@
             ],
             "support": {
                 "issues": "https://github.com/inertiajs/inertia-laravel/issues",
-                "source": "https://github.com/inertiajs/inertia-laravel/tree/v2.0.15"
+                "source": "https://github.com/inertiajs/inertia-laravel/tree/v2.0.16"
             },
-            "time": "2025-12-15T14:47:18+00:00"
+            "time": "2025-12-17T21:57:59+00:00"
         },
         {
             "name": "laravel-lang/actions",
@@ -2394,16 +2394,16 @@
         },
         {
             "name": "laravel-lang/moonshine",
-            "version": "1.7.0",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/moonshine.git",
-                "reference": "3ee6678d649983646831dc036fe2c0b510683e45"
+                "reference": "d91b2de3fa94d71accac81726f907747c770127f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/moonshine/zipball/3ee6678d649983646831dc036fe2c0b510683e45",
-                "reference": "3ee6678d649983646831dc036fe2c0b510683e45",
+                "url": "https://api.github.com/repos/Laravel-Lang/moonshine/zipball/d91b2de3fa94d71accac81726f907747c770127f",
+                "reference": "d91b2de3fa94d71accac81726f907747c770127f",
                 "shasum": ""
             },
             "require": {
@@ -2456,9 +2456,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Laravel-Lang/moonshine/issues",
-                "source": "https://github.com/Laravel-Lang/moonshine/tree/1.7.0"
+                "source": "https://github.com/Laravel-Lang/moonshine/tree/1.7.1"
             },
-            "time": "2025-11-17T02:56:35+00:00"
+            "time": "2025-12-16T11:06:37+00:00"
         },
         {
             "name": "laravel-lang/native-country-names",
@@ -2912,16 +2912,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v12.42.0",
+            "version": "v12.43.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "509b33095564c5165366d81bbaa0afaac28abe75"
+                "reference": "195b893593a9298edee177c0844132ebaa02102f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/509b33095564c5165366d81bbaa0afaac28abe75",
-                "reference": "509b33095564c5165366d81bbaa0afaac28abe75",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/195b893593a9298edee177c0844132ebaa02102f",
+                "reference": "195b893593a9298edee177c0844132ebaa02102f",
                 "shasum": ""
             },
             "require": {
@@ -3130,7 +3130,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-12-09T15:51:23+00:00"
+            "time": "2025-12-16T18:53:08+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -4983,16 +4983,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.12.17",
+            "version": "v0.12.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "85fbbd9f3064e157fc21fe4362b2b5c19f2ea631"
+                "reference": "ddff0ac01beddc251786fe70367cd8bbdb258196"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/85fbbd9f3064e157fc21fe4362b2b5c19f2ea631",
-                "reference": "85fbbd9f3064e157fc21fe4362b2b5c19f2ea631",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/ddff0ac01beddc251786fe70367cd8bbdb258196",
+                "reference": "ddff0ac01beddc251786fe70367cd8bbdb258196",
                 "shasum": ""
             },
             "require": {
@@ -5056,9 +5056,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.12.17"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.12.18"
             },
-            "time": "2025-12-15T04:55:34+00:00"
+            "time": "2025-12-17T14:35:46+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -9818,25 +9818,25 @@
         },
         {
             "name": "laravel/boost",
-            "version": "v1.8.5",
+            "version": "v1.8.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/boost.git",
-                "reference": "99c15c392f3c6f049f0671dd5dc7b6e9a75cfe7e"
+                "reference": "7a5709a8134ed59d3e7f34fccbd74689830e296c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/boost/zipball/99c15c392f3c6f049f0671dd5dc7b6e9a75cfe7e",
-                "reference": "99c15c392f3c6f049f0671dd5dc7b6e9a75cfe7e",
+                "url": "https://api.github.com/repos/laravel/boost/zipball/7a5709a8134ed59d3e7f34fccbd74689830e296c",
+                "reference": "7a5709a8134ed59d3e7f34fccbd74689830e296c",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^7.9",
-                "illuminate/console": "^10.49.0|^11.45.3|^12.28.1",
-                "illuminate/contracts": "^10.49.0|^11.45.3|^12.28.1",
-                "illuminate/routing": "^10.49.0|^11.45.3|^12.28.1",
-                "illuminate/support": "^10.49.0|^11.45.3|^12.28.1",
-                "laravel/mcp": "^0.4.1",
+                "illuminate/console": "^10.49.0|^11.45.3|^12.41.1",
+                "illuminate/contracts": "^10.49.0|^11.45.3|^12.41.1",
+                "illuminate/routing": "^10.49.0|^11.45.3|^12.41.1",
+                "illuminate/support": "^10.49.0|^11.45.3|^12.41.1",
+                "laravel/mcp": "^0.5.1",
                 "laravel/prompts": "0.1.25|^0.3.6",
                 "laravel/roster": "^0.2.9",
                 "php": "^8.1"
@@ -9880,20 +9880,20 @@
                 "issues": "https://github.com/laravel/boost/issues",
                 "source": "https://github.com/laravel/boost"
             },
-            "time": "2025-12-08T21:54:49+00:00"
+            "time": "2025-12-19T15:04:12+00:00"
         },
         {
             "name": "laravel/mcp",
-            "version": "v0.4.2",
+            "version": "v0.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/mcp.git",
-                "reference": "1c7878be3931a19768f791ddf141af29f43fb4ef"
+                "reference": "10dedea054fa4eeaa9ef2ccbfdad6c3e1dbd17a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/mcp/zipball/1c7878be3931a19768f791ddf141af29f43fb4ef",
-                "reference": "1c7878be3931a19768f791ddf141af29f43fb4ef",
+                "url": "https://api.github.com/repos/laravel/mcp/zipball/10dedea054fa4eeaa9ef2ccbfdad6c3e1dbd17a4",
+                "reference": "10dedea054fa4eeaa9ef2ccbfdad6c3e1dbd17a4",
                 "shasum": ""
             },
             "require": {
@@ -9953,7 +9953,7 @@
                 "issues": "https://github.com/laravel/mcp/issues",
                 "source": "https://github.com/laravel/mcp"
             },
-            "time": "2025-12-07T15:49:15+00:00"
+            "time": "2025-12-17T06:14:23+00:00"
         },
         {
             "name": "laravel/pail",

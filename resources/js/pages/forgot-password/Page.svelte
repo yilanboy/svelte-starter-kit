@@ -13,34 +13,6 @@
       email: string;
     };
   }
-
-  $effect(() => {
-    if ($page.props.flash.success) {
-      window.dispatchEvent(
-        new CustomEvent("show-toast", {
-          detail: {
-            type: "success",
-            message: "Reset link sent",
-            description: $page.props.flash.success,
-            position: "top-right",
-          },
-        }),
-      );
-    }
-
-    if ($page.props.flash.error) {
-      window.dispatchEvent(
-        new CustomEvent("show-toast", {
-          detail: {
-            type: "danger",
-            message: "Too many attempts",
-            description: $page.props.flash.error,
-            position: "top-right",
-          },
-        }),
-      );
-    }
-  });
 </script>
 
 <svelte:head>

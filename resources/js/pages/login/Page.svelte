@@ -15,19 +15,6 @@
     validate: (field: string) => void;
   }
 
-  function handleSuccess() {
-    window.dispatchEvent(
-      new CustomEvent("show-toast", {
-        detail: {
-          type: "success",
-          message: "Welcome back",
-          description: "Signed in successfully",
-          position: "top-right",
-        },
-      }),
-    );
-  }
-
   let title = "Login";
 </script>
 
@@ -57,7 +44,6 @@
         class="space-y-6"
         method="post"
         action={AuthenticatedSessionController.store()}
-        onSuccess={handleSuccess}
       >
         {#snippet children({ errors, invalid, validate }: FormSlotProps)}
           <InputWithLabel

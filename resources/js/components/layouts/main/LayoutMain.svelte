@@ -2,6 +2,7 @@
   import type { Snippet } from "svelte";
   import Sidebar from "@/components/layouts/main/partials/Sidebar.svelte";
   import Header from "@/components/layouts/main/partials/Header.svelte";
+  import Toasts from "@/components/Toasts.svelte";
 
   interface Props {
     children: Snippet;
@@ -25,4 +26,6 @@
   >
     {@render children?.()}
   </div>
+
+  <Toasts />
 </div>
