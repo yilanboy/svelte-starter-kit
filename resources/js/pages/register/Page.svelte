@@ -9,25 +9,12 @@
 
   let title = "Register";
 
-  interface SlotProps {
+  interface FormSlotProps {
     errors: {
       name: string;
       email: string;
       password: string;
     };
-  }
-
-  function handleSuccess() {
-    window.dispatchEvent(
-      new CustomEvent("show-toast", {
-        detail: {
-          type: "success",
-          message: "Account created",
-          description: "You're all set — welcome aboard!",
-          position: "top-right",
-        },
-      }),
-    );
   }
 </script>
 
@@ -53,13 +40,8 @@
     </h2>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <Form
-        class="space-y-6"
-        method="post"
-        action={RegisterController.store()}
-        onSuccess={handleSuccess}
-      >
-        {#snippet children({ errors }: SlotProps)}
+      <Form class="space-y-6" method="post" action={RegisterController.store()}>
+        {#snippet children({ errors }: FormSlotProps)}
           <InputWithLabel label="Name" id="name" name="name" required />
 
           {#if errors.name}

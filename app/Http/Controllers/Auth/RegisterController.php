@@ -32,6 +32,12 @@ class RegisterController extends Controller
         Auth::login($user);
         Session::regenerate();
 
+        Inertia::flash('toast', [
+            'type'        => 'success',
+            'message'     => 'Account created successfully!',
+            'description' => "You're all set — welcome aboard!",
+        ]);
+
         return to_route('verification.notice');
     }
 }

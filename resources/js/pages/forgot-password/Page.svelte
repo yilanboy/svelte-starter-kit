@@ -1,6 +1,6 @@
 <script lang="ts">
   import ForgotPasswordController from "@/actions/App/Http/Controllers/Auth/ForgotPasswordController";
-  import { Form, page } from "@inertiajs/svelte";
+  import { Form } from "@inertiajs/svelte";
   import ChevronLeft from "@/components/icons/ChevronLeft.svelte";
   import { back } from "@/helpers";
   import InputWithLabel from "@/components/forms/InputWithLabel.svelte";

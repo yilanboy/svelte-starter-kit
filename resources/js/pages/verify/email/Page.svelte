@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page, router } from "@inertiajs/svelte";
+  import { router } from "@inertiajs/svelte";
   import LayoutGuest from "@/components/layouts/guest/LayoutGuest.svelte";
 
   let title = "Verify Email";
@@ -32,21 +32,6 @@
       onSuccess: () => startCountdown(),
     });
   }
-
-  $effect(() => {
-    if ($page.props.flash.success) {
-      window.dispatchEvent(
-        new CustomEvent("show-toast", {
-          detail: {
-            type: "success",
-            message: "Verification email sent",
-            description: $page.props.flash.success,
-            position: "top-right",
-          },
-        }),
-      );
-    }
-  });
 </script>
 
 <svelte:head>
