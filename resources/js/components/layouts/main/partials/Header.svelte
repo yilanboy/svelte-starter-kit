@@ -76,7 +76,7 @@
       <a href="#" class="text-sm/6 font-semibold text-gray-900">Company</a>
     </div>
 
-    <div class="flex flex-1 items-center justify-end gap-x-6">
+    <div class="flex flex-1 items-center justify-end gap-x-4">
       <!-- Separator -->
       <div
         class="hidden lg:block lg:h-6 lg:w-px lg:bg-zinc-200"

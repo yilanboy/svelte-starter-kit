@@ -13,7 +13,7 @@
 </svelte:head>
 
 <LayoutMain>
-  <main class="h-dvh py-10">
+  <main class="h-[calc(100vh-4rem)] py-10">
     <div
       class="mx-auto grid h-full w-full max-w-7xl grid-cols-3 grid-rows-4 gap-6 px-4 sm:px-6 lg:px-8"
     >
